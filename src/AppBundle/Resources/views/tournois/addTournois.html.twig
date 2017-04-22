@@ -1,0 +1,32 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+
+
+    <div class="container">
+    <h2>creer un tournois</h2>
+    <br>
+
+    <form action="{{ path('creer_tournois') }}" method="post">
+
+        {#{{ form_start(form) }}#}
+        {{ form_widget(form) }}
+        {{ form_rest(form) }}
+        <input type="submit" value="Créer">
+        {#{{ form_end(form) }}#}
+    </form>
+
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <br>
+
+
+    <a href="{{ path('tournois_homepage') }}"> <button>Retour</button></a>
+{% endblock %}

@@ -1,0 +1,519 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+<div class="body">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+           <ul class=" nav navbar-nav">
+
+               {% if variablePartie.tournois != null %}
+                    <li> <a href="{{ path('afficher_tournois', {'id':variablePartie.tournois.id}) }}" title="Retour au partie"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </a>
+                    </li>
+               {% else %}
+                    <li> <a href="{{ path('joueur_partie') }} " title="Retour au partie"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </a>
+                    </li>
+                {% endif %}
+           </ul>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"> Partie entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</a>
+
+
+            </div>
+            <ul class=" nav navbar-nav center-nav ">
+                <li>
+                    <a class="text-center">score : {{ partie.joueur1.username }} {{ variablePartie.scoreJ1 }}, {{ partie.joueur2.username }} {{ variablePartie.scoreJ2 }}</a>
+                </li>
+                <li>
+                    <a class="text-center">Nombre de cartes restante : {{ variablePartie.carteRestante }}</a>
+                </li>
+                {% if variablePartie.tournois != null %}
+                    <li>
+                        <a class="text-center">Tournois : {{ variablePartie.tournois.tournoisNom }}</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li> <a href="#">{% if variablePartie.montour == true %}C'est mon tour{% elseif variablePartie.montour == false %}Tour de l'adversaire{% endif %}</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    {#{% for carte in variablePartie.pioche %}#}
+        {#{{ carte.carteValeur }},#}
+    {#{% endfor %}#}
+    {% if variablePartie.partieFin == true %}
+        <h1>Partie fini</h1>
+
+        Aller à l'historique des parties pour voir les statistiques de la <a href="{{ path('afficher_partie_historique', {'id':partie.id} ) }}">partie</a> ;)
+
+    {% elseif variablePartie.partieFin == false %}
+
+    <div class="container">
+        <h2>main de l'adversaire</h2>
+
+        <div class="col-sm-8">
+
+            <div class="row">
+                {% for cartesTerrain in variablePartie.adversaireCartes %}
+                    <div class="col-sm-3" >
+                        <div class="carte">
+                            <p>dos de la carte</p>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Chat</div>
+              <div class="panel-body" id="zone-de-chat">
+                {#{{ dump(variablePartie.chat) }}#}
+                {% for chat in variablePartie.chat %}
+
+                    {% if chat.joueur.id == user.id %}
+                        <p>{{ chat.message }}</p>
+                    {% else %}
+                        <p style="color: green">{{ chat.message }}</p>
+                    {% endif %}
+
+                {% endfor %}
+              </div>
+              <div class="formulaire">
+
+                  <input type="hidden" name="pseudo" id="idJoueur" value="{{ variablePartie.me.id }}">
+                  <input type="text" name="text" id="text"  onkeyup="setNotif()" placeholder="Message">
+                  <input type="hidden" name="envoyer" id="submit">
+
+              </div>
+            </div>
+        </div>
+
+
+    </div>
+    <hr>
+    <div class="container">
+        <p class="text-center">Plateau de jeu</p>
+
+        <h3>terrain de l'adversaire</h3>
+
+        {% if variablePartie.adversaireTerrain %}
+            <div class="row" >
+            {#{{ dump(variablePartie.adversaireTerrain) }}#}
+            {% for key, cartesTerrain in variablePartie.adversaireTerrain %}
+                <div class="col-sm-2" >
+                    {#|{{ key }}|#}
+
+                    {% for carte in cartesTerrain %}
+
+
+                        {#{{ loop.index }}#}
+                           {% if loop.last %}
+                                {% for key, carte in carte|slice(0, 1) %}
+
+                                      point du terrain : {{ carte }}
+                                {% endfor %}
+                           {% else %}
+                                {% for key, carte in carte|slice(0, 1) %}
+
+                            <div class="carte1">
+                                {% if cartes3[carte].carteExtra == true %}
+                                    <strong>extra</strong>
+                                {% else %}
+                                    <strong>{{ cartes3[carte].carteValeur }}</strong>
+                                {% endif %}
+                                <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
+                                <p>{{ cartes3[carte].carteNom }}</p>
+                                <p>{{ cartes3[carte].carteCategorie.libelle }}</p>
+                            </div>
+                        {% endfor %}
+                           {% endif %}
+
+                    {% else %}
+                        Pas encore de cartes posées
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Pas encore de cartes posées</p>
+        {% endif %}
+
+    </div>
+
+    <hr>
+
+    <div class="container">
+
+        <h3>defausse</h3>
+        {% if variablePartie.partieDefausse %}
+
+            {#{{ dump(variablePartie.partieDefausse) }}#}
+            <div class="row" >
+            {% for key, cartesDefausse in variablePartie.partieDefausse %}
+                {#|{{ key }}|#}
+                <div class="col-sm-2" >
+
+                {% for carte in cartesDefausse %}
+
+                    <div class="carte2" style="background-color: {{ cartes3[carte].carteCategorie.couleur }} ">
+                        {% if cartes3[carte].carteExtra == true %}
+                            <strong>extra</strong>
+                        {% else %}
+                            <strong>{{ cartes3[carte].carteValeur }}</strong>
+                        {% endif %}
+                        <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
+                        <p>{{ cartes3[carte].carteNom }}</p>
+                        {#<p>{{ cartes3[carte].carteCategorie.libelle }}</p>#}
+
+                        {% if variablePartie.montour == true %}
+                            {% if variablePartie.activePose == false %}
+                                <form action="" method="post">
+                                    <input type="hidden" name="recupererId" value="{{ cartes3[carte].id }}">
+                                    <input type="hidden" name="recupererCategorieId" value="{{ cartes3[carte].carteCategorie.id }}">
+                                    <input type="submit" value="recuperer" name="recuperer">
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                {% else %}
+                    Pas encore de cartes posées
+                {% endfor %}
+
+                </div>
+
+            {% endfor %}
+            </div>
+
+        {% else %}
+            <p>Pas encore de cartes posées</p>
+        {% endif %}
+
+    </div>
+
+    <hr>
+
+    <div class="container">
+
+        <p>Mon terrain</p>
+        {% if variablePartie.monTerrain %}
+
+            {#{{ dump(variablePartie.monTerrain) }}#}
+            <div class="row">
+            {% for key, cartesTerrain in variablePartie.monTerrain %}
+
+                <div class="col-sm-2">
+                    {#|{{ key }}|#}
+                    {#{{ dump(cartesTerrain) }}#}
+                    {% for carte in cartesTerrain %}
+                           {#{{ loop.index }}#}
+
+                           
+                           {% if loop.last %}
+                                {% for key, carte in carte|slice(0, 1) %}
+
+                                      point du terrain : {{ carte }}
+                                {% endfor %}
+                           {% else %}
+                                {% for key, carte in carte|slice(0, 1) %}
+
+                            <div class="cartes2">
+                                {% if cartes3[carte].carteExtra == true %}
+                                    <strong>extra</strong>
+                                {% else %}
+                                    <strong>{{ cartes3[carte].carteValeur }}</strong>
+                                {% endif %}
+                                <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
+                                <p>{{ cartes3[carte].carteNom }}</p>
+                                <p>{{ cartes3[carte].carteCategorie.libelle }}</p>
+                            </div>
+                        {% endfor %}
+                           {% endif %}
+
+
+
+                    {% else %}
+                        Pas encore de cartes posées
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+        {% else %}
+            <p>Pas encore de cartes posées</p>
+        {% endif %}
+
+    </div>
+
+    <hr>
+
+    <div>
+        <h3 class="text-center">mes cartes</h3>
+
+        {% if variablePartie.montour == true %}
+            {% if variablePartie.activePose == false %}
+                <form action="" method="post">
+                    <input type="submit" value="Piocher" name="piocher">
+                </form>
+            {% endif %}
+        {% endif %}
+
+        <div class="row">
+        {% for carte in variablePartie.mesCartes %}
+            <div class="col-sm-2">
+                <div class="cartes2">
+                    {% if cartes3[carte].carteExtra == true %}
+                        <strong>extra</strong>
+                    {% else %}
+                        <strong>{{ cartes3[carte].carteValeur }}</strong>
+                    {% endif %}
+                    <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
+                    <p>{{ cartes3[carte].carteNom }}</p>
+                    {#<p>{{ carte.carteLibelle }}</p>#}
+
+
+                    {% if variablePartie.montour == true %}
+
+                        {% if variablePartie.activePose == true %}
+                            <form action="" method="post">
+                                <input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">
+                                <input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">
+                                <input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">
+                                <input type="hidden" name="cartePoserExtra" value="{{ cartes3[carte].carteExtra }}">
+                                <input type="submit" value="poser" name="poser">
+                            </form>
+                            <form action="" method="post">
+                                <input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">
+                                <input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">
+                                <input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">
+                                <input type="submit" value="defausser" name="defausser">
+                            </form>
+                        {% endif %}
+
+
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    {% if variablePartie.montour != true %}
+    var montour = false;
+    {% else %}
+    var montour = true;
+    {% endif %}
+
+        if (montour != true ) {
+            setInterval(function () {
+//                console.log('test');
+                $.ajax({
+
+                    url: '{{ path('verif_partie', {'partie': variablePartie.idPartie  }) }}',
+                    type: 'POST',
+
+                    success: function (code_html, statut) { // code_html contient le HTML renvoyé
+
+//                        console.log("ajax");
+                        if ( code_html.tour == {{ variablePartie.imJoueur }}){
+
+                            window.location.href = "{{ path('afficher_partie', {'id': variablePartie.idPartie }  ) }}";
+                        }
+                    },
+                    error: function (resultat, statut, erreur) {
+
+                        console.log("error");
+
+                    }
+                });
+
+            }, 3000);
+        }
+    </script>
+
+    <script type="text/javascript">
+
+    function wizz(){
+
+            for (var i = 4 - 1; i >= 0; i--) {
+                $('.last').animate({ "left": "-=5px" }, 100 );
+                $('.last').animate({ "left": "+=5px" }, 100 );
+            }
+
+        }
+
+    function setNotif(){
+
+            $('head title').html('Chat instantanné');
+            new_message = 0;
+        }
+
+
+        var nb_message = null ;
+        var new_message=new Number();
+        var nb_1 = 1;
+        var auteurScroll;
+        var positionScroll;
+        var auteurScroll_detect;
+
+            var auto_id = setInterval(
+          function ()
+          {
+
+//              console.log('etape1');
+            $.getJSON('{{ path('get_last_id_chat', {'id':partie.id}) }}', function(result){
+
+//                console.log('etape2');
+                $('#zone-de-chat p').removeClass( "last" );
+
+                if (nb_message === null){
+                    if (result.last_id === null){
+                        nb_message = 0;
+                    }else {
+                        nb_message = result.last_id;
+                    }
+
+                }
+                if (nb_message < result.last_id && result.last_id != null) {
+
+//                    console.log('etape3');
+
+                    if(nb_message < result.last_id){
+                        nb_message +=1;
+                    }
+
+                    new_message += nb_1;
+
+                    // $('#zone-de-chat').load('recup.php');
+//                    $('#zone-de-chat').scroll(function(){
+//
+//                        positionScroll=$('#zone-de-chat').scrollTop();
+//                        auteurScroll=$('#zone-de-chat').prop('scrollHeight');
+//                        auteurScroll_detect=auteurScroll-550;
+//                    });
+
+                    $.getJSON('{{ path('get_chat', {'id':partie.id}) }}', function(result_m){
+
+                    if(result_m.joueurId != {{ user.id }} ){
+
+                        if (result_m.joueurId == 'Serveur') {
+
+                            $('#zone-de-chat').append('<div class="ms"><i>'+result_m.message+'</i> </div>');
+
+                        }else{
+
+                        $('#zone-de-chat').append('<div class="ms"><i>'+result_m.joueur+' :</i> <div class="message"><p class="recep last" style="left: 0px;">'+result_m.message+'</p></div></div>');
+//                        $.playSound("son/notification");
+
+                        }
+
+                    }else{
+
+
+                        $('#zone-de-chat').append('<div class="message_sender"><p class="sender last" style="left: 0px;">'+result_m.message+'</p></div>');
+                        setNotif();
+
+                    }
+
+                    });
+
+                    $('#zone-de-chat p').last().addClass( "last" );
+
+//                    if (auteurScroll_detect>positionScroll) {
+//
+//                    }else{
+//                        $('#zone-de-chat').scrollTo('.last');
+//                    }
+
+
+//                    setTimeout(wizz(), 800);
+
+//                    $('head title').html('('+new_message+') Chat instantanné');
+
+
+
+                    nb_message = result.last_id
+                }
+
+                $('#zone-de-chat p').last().addClass( "last" );
+
+
+
+            });
+
+          }, 500);
+
+
+
+
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+//		$('#text').click(function() {
+//
+//		$('head title').html('Chat instantanné');
+//
+//		new_message = 0;
+//
+//	});
+		$('#zone-de-chat').scroll(function(){setNotif()});
+
+	$(function(envoi) {
+        $('#submit').click(function() {
+
+        	idJoueur = $("#idJoueur").val();
+        	text = $("#text").val();
+
+
+
+          $.ajax({
+
+
+
+            url: '{{ path('add_chat', {'partie':partie.id}) }}?text='+text,
+
+
+            success: function(data) {
+
+
+        		$("#text").val('');
+
+          	},
+            error: function() {
+              alert('La requête n\'a pas abouti');
+          	}
+          });
+        });
+      });
+
+
+    $('body').keypress(function(event) {
+
+        if(event.keyCode===13) {
+            $('#submit').click();
+            setNotif();
+          }
+
+        });
+    });
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur: {{ user.username }}</h1>
+    <h2>Créer une nouvelle partie</h2>
+
+    <table class="table">
+        {% for joueur in joueurs if joueur.username != user.username %}
+            <tr>
+                <td>{{ joueur.username }}</td>
+                <td><a href="{{ path('creer_partie', {'joueur':joueur.id}) }}">Inviter à jouer</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    <a href="{{ path('joueur_homepage') }}">Retour</a>
+{% endblock %}

@@ -1,0 +1,250 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Tournois
+ *
+ * @ORM\Table(name="tournois")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TournoisRepository")
+ */
+class Tournois
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tournois_nom", type="string", length=255, nullable=true)
+     */
+    private $tournoisNom;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tournois_date_debut", type="datetime")
+     */
+    private $tournoisDateDebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tournois_date_fin", type="datetime", nullable=true)
+     */
+    private $tournoisDateFin;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tournois_nombre_joueurs", type="integer", nullable=true)
+     */
+    private $tournoisNombreJoueurs;
+
+    /**
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity="Partie", mappedBy="tournois")
+     *
+     */
+    private $parties;
+
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="tournois")
+     *
+     */
+    private $users;
+
+    function __construct()
+    {
+        $this->parties = new  \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->users = new  \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->setTournoisDateDebut(new \DateTime("now"));
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set tournoisNom
+     *
+     * @param string $tournoisNom
+     *
+     * @return Tournois
+     */
+    public function setTournoisNom($tournoisNom)
+    {
+        $this->tournoisNom = $tournoisNom;
+
+        return $this;
+    }
+
+    /**
+     * Get tournoisNom
+     *
+     * @return string
+     */
+    public function getTournoisNom()
+    {
+        return $this->tournoisNom;
+    }
+
+    /**
+     * Set tournoisDateDebut
+     *
+     * @param \DateTime $tournoisDateDebut
+     *
+     * @return Tournois
+     */
+    public function setTournoisDateDebut($tournoisDateDebut)
+    {
+        $this->tournoisDateDebut = $tournoisDateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get tournoisDateDebut
+     *
+     * @return \DateTime
+     */
+    public function getTournoisDateDebut()
+    {
+        return $this->tournoisDateDebut;
+    }
+
+    /**
+     * Set tournoisDateFin
+     *
+     * @param \DateTime $tournoisDateFin
+     *
+     * @return Tournois
+     */
+    public function setTournoisDateFin($tournoisDateFin)
+    {
+        $this->tournoisDateFin = $tournoisDateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get tournoisDateFin
+     *
+     * @return \DateTime
+     */
+    public function getTournoisDateFin()
+    {
+        return $this->tournoisDateFin;
+    }
+
+    /**
+     * Set tournoisNombreJoueurs
+     *
+     * @param integer $tournoisNombreJoueurs
+     *
+     * @return Tournois
+     */
+    public function setTournoisNombreJoueurs($tournoisNombreJoueurs)
+    {
+        $this->tournoisNombreJoueurs = $tournoisNombreJoueurs;
+
+        return $this;
+    }
+
+    /**
+     * Get tournoisNombreJoueurs
+     *
+     * @return int
+     */
+    public function getTournoisNombreJoueurs()
+    {
+        return $this->tournoisNombreJoueurs;
+    }
+
+    /**
+     * Add party
+     *
+     * @param \AppBundle\Entity\Partie $party
+     *
+     * @return Tournois
+     */
+    public function addParty(\AppBundle\Entity\Partie $party)
+    {
+        $this->parties[] = $party;
+
+        return $this;
+    }
+
+    /**
+     * Remove party
+     *
+     * @param \AppBundle\Entity\Partie $party
+     */
+    public function removeParty(\AppBundle\Entity\Partie $party)
+    {
+        $this->parties->removeElement($party);
+    }
+
+    /**
+     * Get parties
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParties()
+    {
+        return $this->parties;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Tournois
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+}

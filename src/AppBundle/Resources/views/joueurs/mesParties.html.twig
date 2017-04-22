@@ -1,0 +1,22 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur : {{ user.userPrenom }}</h1>
+    <h2>Mes parties en cours</h2>
+
+    <div>
+        <ul>
+            {% for partie in user.parties %}
+
+                {% for partie in partie if partie.partieDateFin == NULL and partie.tournois == NULL %}
+                    <p><a href="{{ path('afficher_partie', {'id':partie.id} ) }}" > Aller à la partie {{ partie.id }} avec {% if user.id == partie.joueur1.id %} {{ partie.joueur2.username }} en tant que joueur 1 {% if partie.partieTourJoueur == 1 %}<strong>Cest mon tour</strong> {% endif %} {% elseif user.id == partie.joueur2.id %} {{ partie.joueur1.username }} en tant que joueur 2 {% if partie.partieTourJoueur == 2 %}<strong>Cest mon tour</strong> {% endif %} {% endif %} </a></p>
+                {% endfor %}
+            {% else %}
+                Aucune partie en cours. <a href="{{ path('joueur_partie_add') }}">Créer une partie</a>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <a href="{{ path('joueur_homepage') }}">Retour</a>
+{% endblock %}

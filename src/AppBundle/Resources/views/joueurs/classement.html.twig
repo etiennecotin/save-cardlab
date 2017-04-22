@@ -1,0 +1,37 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+
+
+    {#<ul>#}
+        {#<li><a href="{{ path('joueur_partie') }}">Mes parties</a></li>#}
+        {#<li><a href="{{ path('joueur_partie_add') }}">Nouvelle Partie</a></li>#}
+        {#<li><a href="{{ path('joueur_partie_historique') }}">Historique de mes parties</a></li>#}
+        {#<li><a href="{{ path('joueur_partie_historique') }}">Voir le classement</a></li>#}
+    {#</ul>#}
+    <div class="container">
+        <h2>Classement des meilleurs joueurs</h2>
+        {#<h2>{%  if variablePartie.gagnant == true %} <span class="text-success">Partie Gagnée</span> {% elseif variablePartie.gagnant == false %} <span class="text-danger text-white">Partie Perdu</span> {% endif %}</h2>#}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="background-color: mediumseagreen">Pseudo</th>
+                <th style="background-color: mediumseagreen">Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for joueur in classement|slice(0,10) %}
+                <tr>
+                    <td>{{ joueur.username }}</td>
+                    <td colspan="2">{{ joueur.userBestScore }}</td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('joueur_homepage') }}"> <button>Retour</button></a>
+{% endblock %}

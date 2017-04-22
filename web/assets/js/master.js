@@ -1,0 +1,10 @@
+$(document).ready(function(){
+  $('.inscription').click(function(){
+    $('#mod_co').hide();
+    $('#mod_insc').toggle();
+  });
+  $('.connexion').click(function(){
+    $('#mod_insc').hide();
+    $('#mod_co').toggle();
+  });
+});

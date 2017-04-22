@@ -1,0 +1,16 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+
+
+    <ul>
+        <li><a href="{{ path('joueur_partie') }}">Mes parties</a></li>
+        <li><a href="{{ path('joueur_partie_add') }}">Nouvelle Partie</a></li>
+        <li><a href="{{ path('joueur_partie_historique') }}">Historique de mes parties</a></li>
+        <li><a href="{{ path('joueur_partie_classement') }}">Voir le classement</a></li>
+        <li><a href="{{ path('tournois_homepage') }}">Voir les tournois</a></li>
+    </ul>
+
+   <a href="{{ path('homepage') }}"> <button>Retour</button></a>
+{% endblock %}

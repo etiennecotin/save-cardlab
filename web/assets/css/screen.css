@@ -1,0 +1,385 @@
+screen.css
+DÉTAILS
+ACTIVITÉ
+Hier
+E
+Elise Fety a partagé un élément
+mar. 18:39
+Feuille de style
+screen.css
+Consultation autorisée
+Tous les utilisateurs disposant du lien
+E
+Elise Fety a importé un élément
+mar. 18:38
+Feuille de style
+screen.css
+Aucune activité enregistrée avant le 14 mars 2017
+
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: "MarkerFelt";
+  src: url("../fonts/ufonts.com_marker-felt-wide.ttf");
+}
+@keyframes logo {
+  0%, 10% {
+    opacity: 0;
+    transform: scale(2) translate(-400px, -400px) rotate(-10deg);
+  }
+  85% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+  90% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(2deg);
+  }
+  95% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(-2deg);
+  }
+  100% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes modal {
+  0%, 10% {
+    transform: scale(2) translate(-400px, -300px) rotate(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  85% {
+    transform: scale(0.99) translate(0px, 0px) rotate(0deg);
+  }
+  90% {
+    transform: scale(0.99) translate(0px, 0px) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes modal-reverse {
+  0%, 10% {
+    transform: scale(2) translate(300px, -400px) rotate(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  85% {
+    transform: scale(0.99) translate(0px, 0px) rotate(0deg);
+  }
+  90% {
+    transform: scale(0.99) translate(0px, 0px) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes construct {
+  0%, 40% {
+    opacity: 0;
+    transform: translate(-400px, 0px);
+    font-style: italic;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+    font-style: italic;
+  }
+}
+@keyframes lg {
+  0% {
+    opacity: 0;
+    transform: rotateX(-150deg);
+    transform-origin: top;
+  }
+  20% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(0deg);
+    transform-origin: top;
+  }
+}
+/* line 11, ../sass/screen.sass */
+body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* line 16, ../sass/screen.sass */
+.page_connexion {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../img/banniere.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* line 23, ../sass/screen.sass */
+.page_connexion header {
+  height: 110px;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* line 28, ../sass/screen.sass */
+.page_connexion header .langues {
+  background-color: #fff;
+  width: 265px;
+  position: absolute;
+  opacity: 1;
+  margin-top: 20px;
+  margin-left: 75px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+/* line 38, ../sass/screen.sass */
+.page_connexion header .langues a {
+  text-decoration: none;
+  color: auto;
+}
+/* line 43, ../sass/screen.sass */
+.page_connexion header .langues:hover .dropdown {
+  display: inline-block;
+}
+/* line 47, ../sass/screen.sass */
+.page_connexion header .langues .dropdown {
+  display: none;
+  position: absolute;
+  width: 100%;
+  animation: lg 500ms;
+  background-color: #fff;
+  width: 265px;
+}
+/* line 55, ../sass/screen.sass */
+.page_connexion header .langues p {
+  color: #cf9813;
+  font-family: "MarkerFelt";
+  font-size: 30px;
+  text-transform: uppercase;
+  position: relative;
+  padding-left: 20px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+/* line 66, ../sass/screen.sass */
+.page_connexion header .langues p:hover {
+  color: #b38310;
+  transition: color 300ms;
+}
+/* line 70, ../sass/screen.sass */
+.page_connexion header .langues p img {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+/* line 75, ../sass/screen.sass */
+.page_connexion header .langues p.lg_active {
+  cursor: pointer;
+}
+/* line 78, ../sass/screen.sass */
+.page_connexion header button {
+  text-align: center;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 30px;
+  background-color: #5e5e5e;
+  width: 265px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  float: right;
+  margin-right: 75px;
+  margin-left: -40px;
+  margin-top: 35px;
+  cursor: pointer;
+}
+/* line 94, ../sass/screen.sass */
+.page_connexion header button:hover {
+  color: #cf9813;
+  transition: color 300ms;
+}
+/* line 98, ../sass/screen.sass */
+.page_connexion header button.inscription {
+  background-color: #343434;
+}
+/* line 101, ../sass/screen.sass */
+.page_connexion header button .button_int {
+  background-color: #1a1a1a;
+  width: 245px;
+  height: 35px;
+  margin-left: 3px;
+}
+/* line 107, ../sass/screen.sass */
+.page_connexion section {
+  text-align: center;
+}
+/* line 110, ../sass/screen.sass */
+.page_connexion section .logo {
+  margin-top: 15vh;
+  animation: logo 550ms ease-in;
+}
+/* line 114, ../sass/screen.sass */
+.page_connexion section p {
+  font-family: "Helvetica";
+  font-weight: 600;
+  font-size: 25px;
+  margin-top: 10vh;
+  animation: construct 1.2s cubic-bezier(0.49, -0.01, 0.65, 1.45);
+}
+
+/* line 121, ../sass/screen.sass */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -25vh;
+  margin-left: -175px;
+  width: 350px;
+  height: 50vh;
+  background: #fff;
+  color: red;
+  z-index: 1;
+  text-align: center;
+  border: 8px solid #1a1a1a;
+  border-radius: 30px;
+}
+/* line 136, ../sass/screen.sass */
+.modal h2 {
+  font-family: "MarkerFelt";
+  font-size: 40px;
+  text-transform: uppercase;
+  color: #cf9813;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+/* line 144, ../sass/screen.sass */
+.modal#mod_co {
+  animation: modal 300ms ease-in;
+}
+/* line 146, ../sass/screen.sass */
+.modal#mod_co h2 {
+  margin-bottom: 90px;
+}
+/* line 148, ../sass/screen.sass */
+.modal#mod_insc {
+  animation: modal-reverse 300ms ease-in;
+}
+/* line 152, ../sass/screen.sass */
+.modal form input {
+  width: 80%;
+  border: 2px solid #1a1a1a;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+/* line 159, ../sass/screen.sass */
+.modal#mod_co {
+  display: none;
+}
+/* line 162, ../sass/screen.sass */
+.modal#mod_insc {
+  display: none;
+}
+/* line 165, ../sass/screen.sass */
+.modal button {
+  text-align: center;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 30px;
+  background-color: #5e5e5e;
+  width: 265px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 35px;
+  cursor: pointer;
+}
+/* line 181, ../sass/screen.sass */
+.modal button .button_int {
+  background-color: #1a1a1a;
+  width: 245px;
+  height: 35px;
+  margin-left: 3px;
+}
+/* line 188, ../sass/screen.sass */
+.modal button:hover {
+  color: #cf9813;
+  transition: color 300ms;
+}

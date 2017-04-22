@@ -1,0 +1,59 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="body">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <ul class=" nav navbar-nav">
+                <li> <a href="{{ path('joueur_partie_historique') }} " title="Retour au partie"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </a></li>
+            </ul>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"> Partie entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</a>
+
+
+            </div>
+
+            {#<ul class="nav navbar-nav navbar-right">#}
+                {#<li> <a href="#">{% if variablePartie.montour == true %}C'est mon tour{% elseif variablePartie.montour == false %}Tour de l'adversaire{% endif %}</a></li>#}
+            {#</ul>#}
+
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Statistiques de la partie</h2>
+        <h2>{%  if variablePartie.gagnant == true %} <span class="text-success">Partie Gagnée</span> {% elseif variablePartie.gagnant == false %} <span class="text-danger text-white">Partie Perdu</span> {% endif %}</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="background-color: mediumseagreen">Statistiques</th>
+                <th>{{ partie.joueur1.username }}</th>
+                <th>{{ partie.joueur2.username }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Début de la partie</td>
+                <td colspan="2">Le {{ partie.partieDate | date("d/m/Y/ à H:m:s") }}</td>
+            </tr>
+            <tr>
+                <td>Score</td>
+                <td>{{ partie.partieScoreJoueur1 }}</td>
+                <td>{{ partie.partieScoreJoueur2 }}</td>
+            </tr>
+            <tr>
+                <td>Fin de la partie</td>
+                <td colspan="2">Le {{ partie.partieDateFin | date("d/m/Y/ à H:m:s") }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

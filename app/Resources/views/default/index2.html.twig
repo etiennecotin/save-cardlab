@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	
+	    <!-- <header>
+	      <h1>Ultra Political Tournament</h1>
+	      <h2>Clash of Titans</h2>
+	    </header> -->
+	    <section>
+	      <img src="{{ asset('assets/img/logo.png') }}" alt="Ultra Political Tournament">
+	      <div class="construct">
+	        <p>Le jeu qui va vous faire aimer la politique!<br>Bientôt disponible!</p>
+
+	      </div>
+	    </section>
+	    <div id="lien">
+	    <a href="http://149.91.83.85/promo/"><p>Présentation du jeu.</p> </a> <br>
+
+		</div>
+
+		<div id="lien">
+			<a href="{{ path('login') }}"><p>Login.</p> </a>
+
+		</div>
+
+	    <footer>
+	      
+	    </footer>
+	  
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+
+
+    <div class="container">
+    <h2>Listes des tournois</h2>
+    <br>
+
+    <ul>
+        {#{{ dump(tournois) }}#}
+        {% for tournois in tournois %}
+            <li> <a href="{{ path('afficher_tournois', {'id':tournois.id} ) }}">{{ tournois.tournoisNom }} - {{ tournois.tournoisDateDebut | date }} - nombre de joueurs : {{ tournois.tournoisNombreJoueurs}}</a></li>
+        {% endfor %}
+    </ul>
+
+
+
+
+    <a href="{{ path('tournois_homepage') }}"> <button>Retour</button></a>
+{% endblock %}

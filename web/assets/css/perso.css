@@ -1,0 +1,31 @@
+.carte {
+    /*width:80%;*/
+    /*margin: 5px;*/
+    text-align: center;
+    background-color: beige;
+    border-radius: 5px;
+}
+
+.carte2 {
+    /*width: 9%;*/
+    /*margin: 1%;*/
+    text-align: center;
+    /*display: inline-block;*/
+    background-color: #ffefa4;
+    border-radius: 5px;
+    height: 180px;
+    border: 1px solid;
+}
+
+.carte1 {
+    /*width: 30%;*/
+    /*margin: 1%;*/
+    text-align: center;
+    /*display: inline-block;*/
+    background-color: #ffefa4;
+    border-radius: 5px;
+    height: 180px;
+    border: 1px solid;
+}
+
+/*style="width: 9%;margin: 1%;text-align: center;display: inline-block;background-color: #ffefa4;border-radius: 5px;height: 200px; border: 1px solid;"*/

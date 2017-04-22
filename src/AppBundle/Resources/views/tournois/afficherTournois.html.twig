@@ -1,0 +1,101 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+
+
+    <div class="container">
+    <h2>Tournois {{ tournois.tournoisNom }}</h2>
+    <br>
+
+
+    {% if isComplet == true %}
+        <h3>{{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }} Le tournois est complet</h3>
+    {% else %}
+        <h3>{{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }}</h3>
+    {% endif %}
+
+    {% if isComplet == false and participe == false and isComplet == false %}
+        <form action="" method="post">
+            <input type="submit" name="participer" value="Participer au tournois">
+        </form>
+    {% elseif participe == true and isComplet == false %}
+        <form action="" method="post">
+            <input type="submit" name="quitter" value="Quitter le tournois">
+        </form>
+
+    {% endif %}
+
+    {% if isComplet == true %}
+        <h4>le tournois a commencé</h4>
+
+
+        {{ dump(match) }}
+        {{ dump(parties) }}
+        {{ dump(bloc) }}
+
+        {% for partie in bloc %}
+            <h3>manche {{ loop.index }}</h3>
+            {% for key, partie in partie  %}
+                {% if key == 0%}
+
+                    {% else %}
+                        {% if partie.joueur1 == null or partie.joueur2 == null %}
+                            <h4>la partie na pas encore de joueurs</h4>
+                            {% else %}
+                                <h4>partie {{ loop.index-1 }} entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</h4>
+                                <p><a href="{{ path('afficher_tounois_partie', {'idTourois':tournois.id,'id':partie.id} ) }}">voir le match</a></p>
+                        {% endif %}
+
+                {% endif %}
+
+            {% endfor %}
+        {% endfor %}
+        {% for match in match %}
+            <p>Match {{ loop.index }}</p>
+            <div>
+                <ul>
+
+                    {% for joueur in match %}
+                        {% if not loop.last %}
+                            {{ joueur.username }}
+                            {% if not loop.last %}
+                                /
+                            {% endif %}
+
+                        {% else %}
+                                <p><a href="{{ path('afficher_tounois_partie', {'idTourois':tournois.id,'id':joueur.id} ) }}">voir le match</a></p>
+                        {% endif %}
+
+
+                    {% endfor %}
+
+
+                </ul>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+    {% if participe == true %}
+        <p>Je participe au tournois</p>
+    {% endif %}
+
+    {% for joueur in tournois.getUsers %}
+        <p>{{ joueur.username }}</p>
+
+    {% else %}
+        <p>Aucun participant sur ce tournois</p>
+    {% endfor %}
+
+
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <a href="{{ path('afficher_liste_tournois') }}"> <button>Retour</button></a>
+{% endblock %}

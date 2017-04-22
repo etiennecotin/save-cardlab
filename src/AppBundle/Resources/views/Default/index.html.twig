@@ -1,0 +1,59 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+
+    <div class="page_connexion">
+        <header>
+            <div class="langues">
+                <a href="connexion.html"><p class="lg_active">Français <img src="{{ asset('assets/img/flag_fr.png')}}" alt=""></p></a>
+                <div class="dropdown">
+                    <a href="connexion_eng.html"><p>English <img src="{{ asset('assets/img/flag_eng.png') }}" alt=""></p></a>
+                </div>
+            </div>
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {#{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |#}
+                {#<a href="{{ path('fos_user_security_logout') }}">#}
+                    {#{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}#}
+                {#</a>#}
+                {% if is_granted("ROLE_ADMIN") %}
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('admin') }}"> <button class="connexion"><div class="button_int">Admin</div></button> </a>
+                    {% endif %}
+                {% endif %}
+                <a href="{{ path('fos_user_security_logout') }}"> <button class="connexion"><div class="button_int">Déconnexion</div></button> </a>
+                <a href="{{ path('fos_user_profile_show') }}"> <button class="inscription"><div class="button_int">Profile</div></button></a>
+                <a href="{{ path('joueur_homepage') }}"> <button class="inscription"><div class="button_int">profil de jeu</div></button></a>
+
+            {% else %}
+
+
+                <a href="{{ path('fos_user_registration_register') }}"> <button class="inscription"><div class="button_int">Inscription</div></button></a>
+                <a href="{{ path('fos_user_security_login') }}"> <button class="connexion"><div class="button_int">Connexion</div></button> </a>
+            {% endif %}
+        </header>
+        <section>
+            <h1 class="logo"><img src="{{ asset('assets/img/logo2.png')}}" alt="Ultra Political Tournament - Clash of Titans"></h1>
+            <p>Un jeu de cartes stratégique et drôle !</p>
+            <div class="modal" id="mod_insc">
+                <h2>Inscription !!!</h2>
+                <form class="" action="connexion.html" method="post">
+                    <input type="text" name="pseudo" placeholder="Pseudo">
+                    <input type="email" name="email" placeholder="Adresse e-mail">
+                    <input type="password" name="mdp" placeholder="Mot de passe">
+                    <input type="password" name="mdp_confirm" placeholder="Retapez le mot de passe">
+                    <button type="submit" name="button"><div class="button_int">Valider</div></button>
+                </form>
+            </div>
+            <div class="modal" id="mod_co">
+                <h2>Connexion !!!</h2>
+                <form class="" action="connexion.html" method="post">
+                    <input type="text" name="pseudo" placeholder="Pseudo">
+                    <input type="password" name="mdp" placeholder="Mot de passe">
+                    <button type="submit" name="button"><div class="button_int">Valider</div></button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
