@@ -24,4 +24,38 @@ class DefaultController extends Controller
 
         return $this->render('AppBundle:Default:index.html.twig');
     }
+
+    /**
+     * @Route("/test", name="testPage")
+     */
+    public function testAction(){
+
+        //envoi invitation par mail
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Invitation à joueur')
+            ->setFrom('deamdecoy@gmail.com')
+            ->setTo('etienne.cotin@gmail.com')
+            ->setBody(
+                $this->renderView(
+                // app/Resources/views/Emails/registration.html.twig
+                    'AppBundle::emails/invitation.html.twig',
+                    array('name' => 'etienne')
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'Emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->get('mailer')->send($message);
+
+        return $this->render('AppBundle:Default:test.html.twig');
+    }
 }

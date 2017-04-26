@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Plateau</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/screen2.css')}}">
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <!-- <script src="js/jquery-ui.min.js"></script> -->
+    <script src="{{ asset('assets/js/main.js')}}"></script>
+</head>
+<body>
+
+
+{% block body %}{% endblock %}
+{% block scripts %}{% endblock %}
+
+
+{% include 'AppBundle::Default/regles.html.twig' %}
+<!-- FIN DU FAUX SCREENSHOT -->
+
+</body>
+</html>

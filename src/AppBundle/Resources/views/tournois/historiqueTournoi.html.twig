@@ -1,0 +1,49 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+
+
+    {#<ul>#}
+    {#<li><a href="{{ path('joueur_partie') }}">Mes parties</a></li>#}
+    {#<li><a href="{{ path('joueur_partie_add') }}">Nouvelle Partie</a></li>#}
+    {#<li><a href="{{ path('joueur_partie_historique') }}">Historique de mes parties</a></li>#}
+    {#<li><a href="{{ path('joueur_partie_historique') }}">Voir le classement</a></li>#}
+    {#</ul>#}
+    <div class="container">
+    <h2>Historique de mes tournois</h2>
+    <br>
+    <div class="container">
+        <h2>Statistiques de la partie</h2>
+        <h2>{%  if gagnant == user %} <span class="text-success">tournoi Gagné</span> {% else %} <span class="text-danger text-white">Tournoi Perdu</span> {% endif %}</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="background-color: mediumseagreen" colspan="2">Statistiques</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Les joueurs</td>
+                <td colspan="2">{% for user in tournoi.users %} {{ user.username }} {% if not loop.last %}/{% endif %} {% endfor %}</td>
+            </tr>
+            <tr>
+                <td>Début du tournoi</td>
+                <td colspan="2">Le {{ tournoi.tournoisDateDebut | date("d/m/Y/ à H:m:s") }}</td>
+            </tr>
+            <tr>
+                <td>Gagnant</td>
+                <td colspan="2">{{ gagnant.username }}</td>
+            </tr>
+            <tr>
+                <td>Fin du tournoi</td>
+                <td colspan="2">Le {{ tournoi.tournoisDateFin | date("d/m/Y/ à H:m:s") }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <h3><a href="{{ path('afficher_tournois', {'id':tournoi.id} ) }}">Aller au tournoi</a></h3>
+    </div>
+
+
+    <a href="{{ path('historique_mes_tournois') }}"> <button>Retour</button></a>
+{% endblock %}

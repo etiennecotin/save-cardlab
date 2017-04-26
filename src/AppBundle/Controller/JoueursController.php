@@ -275,6 +275,32 @@ class JoueursController extends Controller
             $em->persist($partie);
             $em->flush();
 
+            //envoi invitation par mail
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Invitation à joueur')
+                ->setFrom($user->getEmail())
+                ->setTo($joueur->getEmail())
+                ->setBody(
+                    $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                        'AppBundle::emails/invitation.html.twig',
+                        array('name' => $user->getUsername())
+                    ),
+                    'text/html'
+                )
+                /*
+                 * If you also want to include a plaintext version of the message
+                ->addPart(
+                    $this->renderView(
+                        'Emails/registration.txt.twig',
+                        array('name' => $name)
+                    ),
+                    'text/plain'
+                )
+                */
+            ;
+            $this->get('mailer')->send($message);
+
             $find = $this->getDoctrine()->getRepository('AppBundle:Partie')->findBy(array('joueur1' => $user, 'joueur2' => $joueur));
 
                 foreach ($find as $part){
@@ -304,6 +330,9 @@ class JoueursController extends Controller
         if ($user1 == $user || $user2 == $user){
             $maPartie = true;
             $idPartie = $find->getId();
+        }elseif($find->getTournois() != null){
+            return $this->redirectToRoute('afficher_tournois', array('id'=>$find->getTournois()->getId()));
+//            return $this->redirectToRoute('afficher_mes_tournois');
         }else{
             return $this->redirectToRoute('joueur_partie');
         }
@@ -530,6 +559,9 @@ class JoueursController extends Controller
 
             $me = $partie->getJoueur1();
 
+            $monScore = $scoreJ1;
+            $adversaireScore = $scoreJ2;
+
             if ($cartePosee == 0){
                 $activePose = true;
             }elseif ($cartePosee == 1){
@@ -703,6 +735,9 @@ class JoueursController extends Controller
 
             $me = $partie->getJoueur2();
 
+            $monScore = $scoreJ1;
+            $adversaireScore = $scoreJ2;
+
             if ($cartePosee == 0){
                 $activePose = true;
             }elseif ($cartePosee == 1){
@@ -739,7 +774,7 @@ class JoueursController extends Controller
 
         $chat = $this->getDoctrine()->getRepository('AppBundle:Chat')->findBy(array('partie' => $partie->getId()));
 
-        $variablePartie = array('idPartie'=> $idPartie, 'imJoueur' => $imJoueur, 'pioche'=>$pioche, 'mesCartes'=>$mesCartes, 'monTerrain'=>$monTerrain, 'adversaireCartes'=> $adversaireCartes, 'adversaireTerrain' => $adversaireTerrain, 'montour' => $montour, 'partieDefausse' => $partieDefausse , 'activePose' => $activePose, 'carteRestante' => $carteRestante, 'partieFin' => $partieFin, 'scoreJ1' => $scoreJ1, 'scoreJ2' => $scoreJ2, 'tournois' => $partieTournois, 'me'=> $me, 'chat'=>$chat );
+        $variablePartie = array('idPartie'=> $idPartie, 'imJoueur' => $imJoueur, 'pioche'=>$pioche, 'mesCartes'=>$mesCartes, 'monTerrain'=>$monTerrain, 'adversaireCartes'=> $adversaireCartes, 'adversaireTerrain' => $adversaireTerrain, 'montour' => $montour, 'partieDefausse' => $partieDefausse , 'activePose' => $activePose, 'carteRestante' => $carteRestante, 'partieFin' => $partieFin, 'scoreJ1' => $scoreJ1, 'scoreJ2' => $scoreJ2, 'tournois' => $partieTournois, 'monScore' => $monScore, 'adversaireScore' => $adversaireScore, 'me'=> $me, 'chat'=>$chat );
 
 //      traiter les requetes
         if ($request->isMethod('POST'))

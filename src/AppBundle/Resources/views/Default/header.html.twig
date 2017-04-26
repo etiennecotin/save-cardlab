@@ -1,0 +1,15 @@
+<header class="navigation">
+    <span class="espace_joueur">Espace joueur : {{ user }}</span>
+    <div class="button_navigation">
+        <a href="{{ path('joueur_partie_add') }}"><button><div class="button_int">Nouvelle partie</div></button></a>
+        <a href="{{ path('joueur_partie') }}"><button><div class="button_int">Mes parties</div></button></a>
+        <a href="{{ path('joueur_partie_historique') }}"><button class="lien_actif"><div class="button_int">Historique</div></button></a>
+        <a href="{{ path('joueur_partie_classement') }}"><button><div class="button_int">Classement</div></button></a>
+        <a href="{{ path('joueur_partie_classement') }}"><button><div class="button_int">Tournois</div></button></a>
+        <a href="{{ path('joueur_partie_classement') }}"><button><div class="button_int">Profil</div></button></a>
+        <button><div class="button_int">Déconnexion </div></button>
+
+
+    </div>
+    <!-- <button><div class="button_int">Profil</div></button> -->
+</header>

@@ -10,8 +10,8 @@
 
     <ul>
         {#{{ dump(tournois) }}#}
-        {% for tournois in tournois %}
-            <li> <a href="{{ path('afficher_tournois', {'id':tournois.id} ) }}">{{ tournois.tournoisNom }} - {{ tournois.tournoisDateDebut | date }} - nombre de joueurs : {{ tournois.tournoisNombreJoueurs}}</a></li>
+        {% for tournois in tournois if tournois.tournoisDateFin == null %}
+            <li> <a href="{{ path('afficher_tournois', {'id':tournois.id} ) }}">{{ tournois.tournoisNom }} - {{ tournois.tournoisDateDebut | date }} - nombre de joueurs : {{ tournois.users|length }}/{{ tournois.tournoisNombreJoueurs}}</a></li>
         {% endfor %}
     </ul>
 

@@ -1,0 +1,1375 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: "MarkerFelt";
+  src: url("../fonts/ufonts.com_marker-felt-wide.ttf");
+}
+@keyframes logo {
+  0%, 10% {
+    opacity: 0;
+    transform: scale(2) translate(-400px, -400px) rotate(-10deg);
+  }
+  85% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+  90% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(2deg);
+  }
+  95% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(-2deg);
+  }
+  100% {
+    opacity: 100%;
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes modal {
+  0%, 10% {
+    transform: scale(2) translate(-400px, -300px) rotate(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  85% {
+    transform: scale(0.99) translate(0px, 0px) rotate(0deg);
+  }
+  90% {
+    transform: scale(0.99) translate(0px, 0px) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes modal-reverse {
+  0%, 10% {
+    transform: scale(2) translate(300px, -400px) rotate(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  85% {
+    transform: scale(0.99) translate(0px, 0px) rotate(0deg);
+  }
+  90% {
+    transform: scale(0.99) translate(0px, 0px) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes construct {
+  0%, 40% {
+    opacity: 0;
+    transform: translate(-400px, 0px);
+    font-style: italic;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+    font-style: italic;
+  }
+}
+@keyframes lg {
+  0% {
+    opacity: 0;
+    transform: rotateX(-150deg);
+    transform-origin: top;
+  }
+  20% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(0deg);
+    transform-origin: top;
+  }
+}
+/* line 11, ../sass/screen.sass */
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* line 17, ../sass/screen.sass */
+.page_connexion {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../img/banniere.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* line 24, ../sass/screen.sass */
+.page_connexion header {
+  height: 110px;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* line 29, ../sass/screen.sass */
+.page_connexion header .langues {
+  background-color: #fff;
+  width: 265px;
+  position: absolute;
+  opacity: 1;
+  margin-top: 20px;
+  margin-left: 75px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+/* line 39, ../sass/screen.sass */
+.page_connexion header .langues a {
+  text-decoration: none;
+  color: auto;
+}
+/* line 44, ../sass/screen.sass */
+.page_connexion header .langues:hover .dropdown {
+  display: inline-block;
+}
+/* line 48, ../sass/screen.sass */
+.page_connexion header .langues .dropdown {
+  display: none;
+  position: absolute;
+  width: 100%;
+  animation: lg 500ms;
+  background-color: #fff;
+  width: 265px;
+}
+/* line 56, ../sass/screen.sass */
+.page_connexion header .langues p {
+  color: #cf9813;
+  font-family: "MarkerFelt";
+  font-size: 30px;
+  text-transform: uppercase;
+  position: relative;
+  padding-left: 20px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+/* line 67, ../sass/screen.sass */
+.page_connexion header .langues p:hover {
+  color: #b38310;
+  transition: color 300ms;
+}
+/* line 71, ../sass/screen.sass */
+.page_connexion header .langues p img {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+/* line 76, ../sass/screen.sass */
+.page_connexion header .langues p.lg_active {
+  cursor: pointer;
+}
+/* line 79, ../sass/screen.sass */
+.page_connexion header button {
+  text-align: center;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 30px;
+  background-color: #5e5e5e;
+  width: 265px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  float: right;
+  margin-right: 75px;
+  margin-left: -40px;
+  margin-top: 35px;
+  cursor: pointer;
+}
+/* line 95, ../sass/screen.sass */
+.page_connexion header button:hover {
+  color: #cf9813;
+  transition: color 300ms;
+}
+/* line 99, ../sass/screen.sass */
+.page_connexion header button.inscription {
+  background-color: #343434;
+}
+/* line 102, ../sass/screen.sass */
+.page_connexion header button .button_int {
+  background-color: #1a1a1a;
+  width: 245px;
+  height: 35px;
+  margin-left: 3px;
+}
+/* line 108, ../sass/screen.sass */
+.page_connexion section {
+  text-align: center;
+}
+/* line 111, ../sass/screen.sass */
+.page_connexion section .logo {
+  margin-top: 15vh;
+  animation: logo 550ms ease-in;
+}
+/* line 115, ../sass/screen.sass */
+.page_connexion section p {
+  font-family: "Helvetica";
+  font-weight: 600;
+  font-size: 25px;
+  margin-top: 10vh;
+  animation: construct 1.2s cubic-bezier(0.49, -0.01, 0.65, 1.45);
+}
+
+/* line 122, ../sass/screen.sass */
+#fermeture {
+  text-align: center;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 30px;
+  background-color: #1a1a1a;
+  margin-top: 35px;
+  cursor: pointer;
+  width: 40px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-top: 0px;
+  border: none;
+  border-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 20px;
+}
+/* line 140, ../sass/screen.sass */
+#fermeture:hover {
+  color: #cf9813;
+  transition: color 300ms;
+}
+
+/* line 143, ../sass/screen.sass */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -220px;
+  margin-left: -175px;
+  width: 350px;
+  height: 440px;
+  background: #fff;
+  color: red;
+  z-index: 1;
+  text-align: center;
+  border: 8px solid #1a1a1a;
+  border-radius: 30px;
+  z-index: 100;
+  animation: modal 300ms ease-in;
+}
+/* line 159, ../sass/screen.sass */
+.modal#popup_jeu {
+  display: none;
+}
+/* line 161, ../sass/screen.sass */
+.modal#popup_jeu #fermeture {
+  border-top-right-radius: 18px;
+}
+/* line 164, ../sass/screen.sass */
+.modal h2 {
+  font-family: "MarkerFelt";
+  font-size: 40px;
+  text-transform: uppercase;
+  color: #cf9813;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+/* line 172, ../sass/screen.sass */
+.modal#mod_co {
+  animation: modal 300ms ease-in;
+  font-family: "MarkerFelt";
+  color: #1a1a1a;
+  text-decoration: none;
+}
+/* line 177, ../sass/screen.sass */
+.modal#mod_co #souvenir {
+  margin-left: -210px;
+}
+/* line 179, ../sass/screen.sass */
+.modal#mod_co label {
+  margin-left: -100px;
+}
+/* line 181, ../sass/screen.sass */
+.modal#mod_co a {
+  text-decoration: none;
+  color: #a96700;
+  display: block;
+  margin-top: 20px;
+}
+/* line 186, ../sass/screen.sass */
+.modal#mod_co h2 {
+  margin-bottom: 90px;
+}
+/* line 188, ../sass/screen.sass */
+.modal#mod_co button {
+  margin-top: 10px;
+}
+/* line 190, ../sass/screen.sass */
+.modal#mod_insc {
+  margin-top: -260px;
+  height: 550px;
+  animation: modal-reverse 300ms ease-in;
+}
+/* line 194, ../sass/screen.sass */
+.modal#mod_insc button {
+  margin-top: 10px;
+}
+/* line 198, ../sass/screen.sass */
+.modal form input {
+  width: 80%;
+  border: 2px solid #1a1a1a;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+/* line 211, ../sass/screen.sass */
+.modal img {
+  width: 150px;
+  margin-top: 20px;
+  box-shadow: 0px 0px 10px grey;
+}
+/* line 216, ../sass/screen.sass */
+.modal button {
+  text-align: center;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 30px;
+  background-color: #5e5e5e;
+  width: 265px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 35px;
+  cursor: pointer;
+}
+/* line 229, ../sass/screen.sass */
+.modal button .button_int {
+  background-color: #1a1a1a;
+  width: 245px;
+  height: 35px;
+  margin-left: 3px;
+}
+/* line 236, ../sass/screen.sass */
+.modal button:hover {
+  color: #cf9813;
+  transition: color 300ms;
+}
+
+/* line 240, ../sass/screen.sass */
+#bouton_accueil {
+  position: absolute;
+  text-align: center;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 20px;
+  background-color: #1a1a1a;
+  width: 180px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  z-index: 100;
+}
+/* line 255, ../sass/screen.sass */
+#bouton_accueil:hover {
+  color: #cf9813;
+  transition: color 300ms;
+}
+
+/* line 259, ../sass/screen.sass */
+.jeu {
+  background-image: url("../img/bg_bois.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+/* line 272, ../sass/screen.sass */
+.jeu .nom {
+  position: absolute;
+  margin-left: -60px;
+  position: absolute;
+  text-align: center;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 20px;
+  background-color: rgba(26, 26, 26, 0.7);
+  width: 180px;
+  padding: 15px 0px;
+  border: none;
+  border-radius: 10px;
+  z-index: 100;
+}
+@media screen and (max-width: 1240px) {
+  /* line 272, ../sass/screen.sass */
+  .jeu .nom {
+    transform: scale(0.8);
+    margin-left: 0px;
+  }
+}
+/* line 289, ../sass/screen.sass */
+.jeu .nom.nom_ennemi {
+  top: 160px;
+}
+/* line 291, ../sass/screen.sass */
+.jeu .nom.nom_joueur {
+  bottom: 150px;
+}
+/* line 294, ../sass/screen.sass */
+.jeu #stylos {
+  position: absolute;
+  top: 300px;
+  left: 0;
+}
+@media screen and (max-width: 1440px) {
+  /* line 294, ../sass/screen.sass */
+  .jeu #stylos {
+    transform: scale(0.9);
+    margin-left: -10px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  /* line 294, ../sass/screen.sass */
+  .jeu #stylos {
+    display: none;
+  }
+}
+/* line 304, ../sass/screen.sass */
+.jeu #dossier {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+@media screen and (max-width: 1440px) {
+  /* line 304, ../sass/screen.sass */
+  .jeu #dossier {
+    transform: scale(0.9);
+    margin-left: -10px;
+    margin-bottom: -15px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  /* line 304, ../sass/screen.sass */
+  .jeu #dossier {
+    display: none;
+  }
+}
+/* line 315, ../sass/screen.sass */
+.jeu #cigares {
+  position: absolute;
+  top: 50px;
+  right: 0;
+}
+@media screen and (max-width: 1440px) {
+  /* line 315, ../sass/screen.sass */
+  .jeu #cigares {
+    transform: scale(0.9);
+    margin-right: -10px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  /* line 315, ../sass/screen.sass */
+  .jeu #cigares {
+    display: none;
+  }
+}
+/* line 325, ../sass/screen.sass */
+.jeu #red_button {
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+}
+@media screen and (max-width: 1440px) {
+  /* line 325, ../sass/screen.sass */
+  .jeu #red_button {
+    transform: scale(0.9);
+    margin-right: -10px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  /* line 325, ../sass/screen.sass */
+  .jeu #red_button {
+    display: none;
+  }
+}
+
+/* line 335, ../sass/screen.sass */
+.tapis {
+  width: 1100px;
+  height: 800px;
+  left: 50%;
+  margin-left: -550px;
+  top: 50%;
+  margin-top: -400px;
+  background-image: url("../img/plateau.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+}
+@media screen and (max-width: 1240px) {
+  /* line 335, ../sass/screen.sass */
+  .tapis {
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+}
+/* line 362, ../sass/screen.sass */
+.tapis #tasse {
+  position: absolute;
+  top: -25px;
+  left: -130px;
+}
+@media screen and (max-width: 1440px) {
+  /* line 362, ../sass/screen.sass */
+  .tapis #tasse {
+    transform: scale(0.9);
+  }
+}
+@media screen and (max-width: 1240px) {
+  /* line 362, ../sass/screen.sass */
+  .tapis #tasse {
+    display: none;
+  }
+}
+/* line 371, ../sass/screen.sass */
+.tapis .cartes {
+  height: 550px;
+  margin-top: -50px;
+  margin-left: -8%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+}
+@media screen and (max-width: 1240px) {
+  /* line 371, ../sass/screen.sass */
+  .tapis .cartes {
+    transform: scale(0.9);
+  }
+}
+/* line 384, ../sass/screen.sass */
+.tapis .cartes .conteneur_drop_ennemi {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+/* line 390, ../sass/screen.sass */
+.tapis .cartes .conteneur_drop_ennemi .drop_ennemi {
+  height: 150px;
+  width: 103px;
+  margin: 0px 20px 0px 20px;
+  border-radius: 10px;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.2);
+}
+/* line 397, ../sass/screen.sass */
+.tapis .cartes .conteneur_drop_ennemi button {
+  background: transparent;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+/* line 404, ../sass/screen.sass */
+.tapis .cartes .min_score_ennemi img, .tapis .cartes .min_score_perso img {
+  transform: scale(0.3);
+}
+/* line 406, ../sass/screen.sass */
+.tapis .cartes .min_score_ennemi p, .tapis .cartes .min_score_perso p {
+  position: absolute;
+  font-family: "MarkerFelt";
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: -87px;
+  margin-left: 50px;
+}
+/* line 414, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_ennemi {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+/* line 420, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_ennemi .min_score_ennemi {
+  position: relative;
+}
+/* line 422, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_ennemi .min_score_ennemi p {
+  transform: rotate(25deg);
+  margin: 0px;
+  position: absolute;
+  top: 78px;
+  left: 64px;
+}
+/* line 428, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_ennemi .min_score_ennemi img {
+  margin: 10px -40px;
+}
+/* line 431, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_ennemi img {
+  height: 150px;
+}
+/* line 435, ../sass/screen.sass */
+.tapis .cartes .defausse img {
+  height: 150px;
+  margin: 10px 20px 10px 20px;
+}
+/* line 438, ../sass/screen.sass */
+.tapis .cartes .defausse button {
+  background: transparent;
+  border: none;
+  margin: 0px -2px;
+  padding: 0px;
+}
+/* line 444, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_perso {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+/* line 450, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_perso img {
+  height: 150px;
+}
+/* line 452, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_perso .min_score_perso {
+  position: relative;
+}
+/* line 454, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_perso .min_score_perso p {
+  transform: rotate(-25deg);
+  margin-left: 65px;
+  margin-top: -72px;
+  position: absolute;
+}
+/* line 459, ../sass/screen.sass */
+.tapis .cartes .conteneur_score_perso .min_score_perso img {
+  margin: -50px -25px -10px -25px;
+}
+/* line 462, ../sass/screen.sass */
+.tapis .cartes .conteneur_drop {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+/* line 468, ../sass/screen.sass */
+.tapis .cartes .conteneur_drop .drop {
+  height: 150px;
+  width: 103px;
+  margin: 0px 20px 0px 20px;
+  border-radius: 10px;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.2);
+}
+/* line 476, ../sass/screen.sass */
+.tapis .pioche {
+  cursor: pointer;
+  transition: transform 300ms;
+  background: transparent;
+  border: none;
+  z-index: 100;
+  position: absolute;
+  top: 50%;
+  margin-top: -65px;
+  right: -70px;
+}
+@media screen and (max-width: 1440px) {
+  /* line 476, ../sass/screen.sass */
+  .tapis .pioche {
+    transform: scale(0.9);
+  }
+}
+@media screen and (max-width: 1240px) {
+  /* line 476, ../sass/screen.sass */
+  .tapis .pioche {
+    right: 30px;
+  }
+}
+/* line 490, ../sass/screen.sass */
+.tapis .pioche:hover {
+  transform: scale(1.02);
+}
+
+/* line 493, ../sass/screen.sass */
+.score_perso, .score_ennemi {
+  position: absolute;
+  right: 0;
+}
+@media screen and (max-width: 1440px) {
+  /* line 493, ../sass/screen.sass */
+  .score_perso, .score_ennemi {
+    transform: scale(0.9);
+  }
+}
+/* line 498, ../sass/screen.sass */
+.score_perso p, .score_ennemi p {
+  position: absolute;
+  font-family: "MarkerFelt";
+  font-size: 25px;
+  margin-top: -50px;
+  margin-left: 30px;
+}
+
+/* line 506, ../sass/screen.sass */
+.score_ennemi {
+  top: 40px;
+  right: 60px;
+}
+/* line 509, ../sass/screen.sass */
+.score_ennemi p {
+  transform: rotate(25deg);
+}
+
+/* line 513, ../sass/screen.sass */
+.score_perso {
+  bottom: 40px;
+  right: 60px;
+}
+/* line 516, ../sass/screen.sass */
+.score_perso p {
+  transform: rotate(-25deg);
+}
+
+/* line 519, ../sass/screen.sass */
+.chat {
+  position: fixed;
+  bottom: 0;
+  right: 3vw;
+  z-index: 150;
+}
+@media screen and (max-width: 1440px) {
+  /* line 519, ../sass/screen.sass */
+  .chat {
+    transform: scale(0.9);
+  }
+}
+/* line 526, ../sass/screen.sass */
+.chat .bouton_chat {
+  font-family: "MarkerFelt";
+  background: #1a1a1a;
+  text-transform: uppercase;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+/* line 539, ../sass/screen.sass */
+.chat .bouton_chat h2 {
+  cursor: pointer;
+}
+/* line 541, ../sass/screen.sass */
+.chat .bouton_chat #fermeture {
+  display: none;
+  background: transparent;
+  top: 7px;
+  right: 7px;
+  z-index: 200;
+}
+/* line 547, ../sass/screen.sass */
+.chat .bloc_chat {
+  width: 300px;
+  background: #fff;
+  padding-top: 15px;
+  font-family: "Helvetica", sans-serif;
+  font-size: 14px;
+  display: none;
+}
+/* line 555, ../sass/screen.sass */
+.chat .bloc_chat .messages {
+  max-height: 260px;
+  overflow-y: auto;
+}
+/* line 559, ../sass/screen.sass */
+.chat .bloc_chat p {
+  padding: 10px 10px;
+  line-height: 18px;
+  width: 200px;
+}
+/* line 563, ../sass/screen.sass */
+.chat .bloc_chat span {
+  font-family: "MarkerFelt";
+}
+/* line 565, ../sass/screen.sass */
+.chat .bloc_chat .msg_ennemi {
+  float: right;
+}
+/* line 568, ../sass/screen.sass */
+.chat .bloc_chat .msg_ennemi span {
+  color: darkred;
+}
+/* line 570, ../sass/screen.sass */
+.chat .bloc_chat .msg_joueur {
+  float: left;
+}
+/* line 572, ../sass/screen.sass */
+.chat .bloc_chat .msg_joueur span {
+  color: darkblue;
+}
+/* line 574, ../sass/screen.sass */
+.chat .bloc_chat button {
+  font-family: "MarkerFelt";
+  cursor: pointer;
+  background: #1a1a1a;
+  text-transform: uppercase;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  width: 15%;
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px;
+  height: 28px;
+  margin-left: -3px;
+  margin-bottom: 5px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+/* line 594, ../sass/screen.sass */
+.chat .bloc_chat input {
+  width: 75%;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  height: 20px;
+  padding: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border: 1px solid grey;
+}
+
+/* line 604, ../sass/screen.sass */
+.temporaire {
+  position: absolute;
+  top: 400px;
+  right: 250px;
+  z-index: 5;
+}
+/* line 609, ../sass/screen.sass */
+.temporaire .carte_active {
+  position: absolute;
+  transform: rotate(0deg) translate(0px, 0px);
+  height: 170px;
+  cursor: pointer;
+}
+
+/* line 615, ../sass/screen.sass */
+.main_joueur {
+  position: fixed;
+  bottom: -75px;
+  width: 100vw;
+  text-align: center;
+  z-index: 5;
+}
+/* line 621, ../sass/screen.sass */
+.main_joueur .carte {
+  height: 150px;
+  margin: 0px -20px;
+  transition: transform 500ms;
+  cursor: pointer;
+}
+/* line 626, ../sass/screen.sass */
+.main_joueur .carte:nth-child(1) {
+  transform: rotate(-7deg) translate(0, 30px);
+}
+/* line 628, ../sass/screen.sass */
+.main_joueur .carte:nth-child(2) {
+  transform: rotate(-6deg) translate(0, 20px);
+}
+/* line 630, ../sass/screen.sass */
+.main_joueur .carte:nth-child(3) {
+  transform: rotate(-5deg) translate(0, 10px);
+}
+/* line 632, ../sass/screen.sass */
+.main_joueur .carte:nth-child(4) {
+  transform: rotate(-3deg);
+}
+/* line 634, ../sass/screen.sass */
+.main_joueur .carte:nth-child(5) {
+  transform: rotate(3deg);
+}
+/* line 636, ../sass/screen.sass */
+.main_joueur .carte:nth-child(6) {
+  transform: rotate(5deg) translate(0, 10px);
+}
+/* line 638, ../sass/screen.sass */
+.main_joueur .carte:nth-child(7) {
+  transform: rotate(6deg) translate(0, 20px);
+}
+/* line 640, ../sass/screen.sass */
+.main_joueur .carte:nth-child(8) {
+  transform: rotate(7deg) translate(0, 30px);
+}
+/* line 642, ../sass/screen.sass */
+.main_joueur .carte:hover {
+  transform: translate(0, -100px) scale(1.1);
+}
+
+/* line 645, ../sass/screen.sass */
+.main_ennemi {
+  position: fixed;
+  top: -75px;
+  width: 100vw;
+  text-align: center;
+  z-index: 10;
+}
+/* line 651, ../sass/screen.sass */
+.main_ennemi img {
+  height: 150px;
+  margin: 0px -20px;
+}
+/* line 654, ../sass/screen.sass */
+.main_ennemi img:nth-child(1) {
+  transform: rotate(187deg) translate(0, 30px);
+}
+/* line 656, ../sass/screen.sass */
+.main_ennemi img:nth-child(2) {
+  transform: rotate(186deg) translate(0, 20px);
+}
+/* line 658, ../sass/screen.sass */
+.main_ennemi img:nth-child(3) {
+  transform: rotate(185deg) translate(0, 10px);
+}
+/* line 660, ../sass/screen.sass */
+.main_ennemi img:nth-child(4) {
+  transform: rotate(183deg);
+}
+/* line 662, ../sass/screen.sass */
+.main_ennemi img:nth-child(5) {
+  transform: rotate(177deg);
+}
+/* line 664, ../sass/screen.sass */
+.main_ennemi img:nth-child(6) {
+  transform: rotate(175deg) translate(0, 10px);
+}
+/* line 666, ../sass/screen.sass */
+.main_ennemi img:nth-child(7) {
+  transform: rotate(174deg) translate(0, 20px);
+}
+/* line 668, ../sass/screen.sass */
+.main_ennemi img:nth-child(8) {
+  transform: rotate(173deg) translate(0, 30px);
+}
+
+/* line 671, ../sass/screen.sass */
+.regles {
+  background: #fff;
+  width: 500px;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  margin-left: -250px;
+  font-family: "Roboto";
+  border-radius: 10px;
+  z-index: 10;
+  display: none;
+  animation: modal-reverse 300ms ease-in;
+  box-shadow: 0px 0px 10px #343434;
+}
+/* line 684, ../sass/screen.sass */
+.regles header {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 20px;
+  font-family: "MarkerFelt";
+}
+/* line 695, ../sass/screen.sass */
+.regles header #fermeture {
+  border-top-right-radius: 7px;
+  background: transparent;
+  top: 13px;
+  right: 10px;
+}
+/* line 700, ../sass/screen.sass */
+.regles .regles_content {
+  height: 550px;
+  overflow-y: scroll;
+  padding: 20px;
+  line-height: 1.3;
+}
+/* line 705, ../sass/screen.sass */
+.regles .regles_content h3 {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #e88e07;
+}
+/* line 712, ../sass/screen.sass */
+.regles .regles_content h4 {
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+/* line 716, ../sass/screen.sass */
+.regles .regles_content p {
+  margin-bottom: 5px;
+}
+/* line 722, ../sass/screen.sass */
+.regles img {
+  width: 150px;
+  margin-top: 40px;
+  margin-left: 25px;
+  box-shadow: 0px 0px 10px grey;
+}
+
+/* line 730, ../sass/screen.sass */
+.pages {
+  width: 600px;
+  height: 700px;
+  background: #fff;
+  border-radius: 2px;
+  margin-left: 220px;
+  margin-top: 10px;
+  position: absolute;
+  text-align: center;
+  font-family: "Helvetica", sans-serif;
+  color: #1a1a1a;
+  box-shadow: 0px 0px 10px #343434;
+  overflow-y: auto;
+}
+/* line 744, ../sass/screen.sass */
+.pages .cadre_avatar {
+  width: 180px;
+  height: 180px;
+  border: 4px solid #000;
+  border-radius: 50%;
+  overflow: hidden;
+  left: 50%;
+  margin-left: -95px;
+  position: relative;
+}
+/* line 754, ../sass/screen.sass */
+.pages .cadre_avatar img {
+  min-width: 180px;
+  min-height: 180px;
+}
+/* line 757, ../sass/screen.sass */
+.pages h1 {
+  font-size: 42px;
+  font-family: "MarkerFelt";
+}
+/* line 762, ../sass/screen.sass */
+.pages #h1_profil {
+  margin: 30px;
+}
+/* line 766, ../sass/screen.sass */
+.pages p {
+  padding: 15px;
+}
+/* line 769, ../sass/screen.sass */
+.pages button {
+  width: 150px;
+  margin: 5px;
+  cursor: pointer;
+  padding: 7px;
+  background: #fff;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: "Helvetica", sans-serif;
+  font-weight: bold;
+  transition: box-shadow 300ms;
+}
+/* line 781, ../sass/screen.sass */
+.pages button:hover {
+  box-shadow: 0px 0px 10px #764800;
+}
+/* line 784, ../sass/screen.sass */
+.pages .inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+}
+/* line 791, ../sass/screen.sass */
+.pages #labelfile {
+  width: 150px;
+  margin: 5px;
+  cursor: pointer;
+  padding: 7px;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 10px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+  transition: box-shadow 300ms;
+}
+/* line 804, ../sass/screen.sass */
+.pages #labelfile:hover {
+  box-shadow: 0px 0px 10px #764800;
+}
+/* line 809, ../sass/screen.sass */
+.pages h2 {
+  font-size: 26px;
+  padding: 20px;
+  margin-top: 50px;
+  font-family: "MarkerFelt", sans-serif;
+}
+/* line 815, ../sass/screen.sass */
+.pages hr {
+  width: 400px;
+  border: 2px solid #000;
+  border-radius: 3px;
+  margin: 30px auto;
+}
+/* line 821, ../sass/screen.sass */
+.pages #parties_button {
+  margin-top: 30px;
+  margin-bottom: 200px;
+}
+/* line 825, ../sass/screen.sass */
+.pages a {
+  text-decoration: none;
+  color: #a96700;
+  font-weight: 700;
+  transition: all 100ms;
+  font-family: "MarkerFelt";
+}
+/* line 831, ../sass/screen.sass */
+.pages a:hover {
+  text-decoration: none;
+  color: #dc8700;
+}
+/* line 835, ../sass/screen.sass */
+.pages table, .pages tr, .pages td {
+  text-align: center;
+  border-radius: 20px;
+}
+/* line 842, ../sass/screen.sass */
+.pages table {
+  margin: auto;
+  margin-top: 50px;
+  width: 100%;
+}
+/* line 847, ../sass/screen.sass */
+.pages td {
+  width: 20%;
+  padding: 20px 0px;
+}
+/* line 851, ../sass/screen.sass */
+.pages #entete td {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: "MarkerFelt";
+}
+/* line 857, ../sass/screen.sass */
+.pages form input, .pages form label, .pages form button, .pages form select {
+  display: block;
+  margin: auto;
+}
+/* line 861, ../sass/screen.sass */
+.pages form label {
+  font-family: "MarkerFelt";
+  margin: 50px 0px 20px 0px;
+}
+/* line 865, ../sass/screen.sass */
+.pages form input, .pages form select {
+  width: 300px;
+  padding: 7px;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: "Helvetica", sans-serif;
+  font-weight: bold;
+}
+/* line 875, ../sass/screen.sass */
+.pages form button {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+/* line 879, ../sass/screen.sass */
+.navigation {
+  height: 60px;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0px;
+  z-index: 200;
+}
+/* line 886, ../sass/screen.sass */
+.navigation .espace_joueur {
+  position: absolute;
+  color: #fff;
+  font-family: "MarkerFelt";
+  font-size: 25px;
+  top: 20px;
+  left: 20px;
+}
+/* line 894, ../sass/screen.sass */
+.navigation .button_navigation {
+  text-align: right;
+}
+/* line 896, ../sass/screen.sass */
+.navigation .button_navigation button {
+  text-align: center !important;
+  font-family: "MarkerFelt";
+  color: #fff;
+  font-size: 18px;
+  background-color: transparent;
+  width: 150px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  text-align: right;
+  margin-right: 50px;
+  margin-left: -40px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+/* line 912, ../sass/screen.sass */
+.navigation .button_navigation button.lien_actif {
+  background-color: #5e5e5e;
+}
+/* line 914, ../sass/screen.sass */
+.navigation .button_navigation button.lien_actif .button_int {
+  background-color: #1a1a1a;
+}
+/* line 916, ../sass/screen.sass */
+.navigation .button_navigation button .button_int {
+  background-color: transparent;
+  width: 133px;
+  height: 24px;
+  margin-left: 3px;
+}
+/* line 922, ../sass/screen.sass */
+.navigation .button_navigation button:hover {
+  color: #cf9813;
+  transition: color 300ms;
+}
+
+/* line 926, ../sass/screen.sass */
+.lien_gauche, .lien_droit {
+  font-family: "MarkerFelt";
+  font-size: 100px;
+  color: #1a1a1a;
+  text-decoration: none;
+  position: absolute;
+  padding: 5px;
+  transition: color 300ms, transform 300ms;
+}
+/* line 934, ../sass/screen.sass */
+.lien_gauche:hover, .lien_droit:hover {
+  color: #5c3800;
+}
+
+/* line 936, ../sass/screen.sass */
+.lien_gauche {
+  left: 100px;
+}
+/* line 938, ../sass/screen.sass */
+.lien_gauche:hover {
+  transform: translate(-5px);
+}
+
+/* line 940, ../sass/screen.sass */
+.lien_droit {
+  right: 100px;
+}
+/* line 942, ../sass/screen.sass */
+.lien_droit:hover {
+  transform: translate(5px);
+}

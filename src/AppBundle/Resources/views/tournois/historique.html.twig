@@ -11,15 +11,14 @@
     {#<li><a href="{{ path('joueur_partie_historique') }}">Voir le classement</a></li>#}
     {#</ul>#}
     <div class="container">
-    <h2>Les tournois</h2>
+    <h2>Historique de mes tournois</h2>
     <br>
-    <h3>Les tournois seront bientôt disponible</h3>
-        <ul>
-            <li> <a href="{{ path('afficher_mes_tournois') }}">Voir mes tournois</a> </li>
-            <li> <a href="{{ path('creer_tournois') }}">Créer un tournois</a> </li>
-            <li> <a href="{{ path('afficher_liste_tournois') }}">Rejoindre un tournois</a> </li>
-            <li> <a href="{{ path('historique_mes_tournois') }}">Historique des tournois</a> </li>
-        </ul>
+    <ul>
+        {% for tournoi in user.tournois if tournoi.tournoisDateFin != null %}
+            {#{{ tournoi.tournoisNom }}#}
+            <li> <a href="{{ path('historique_tournoi', {'id':tournoi.id} ) }}">{{ tournoi.tournoisNom }} - {{ tournoi.tournoisDateFin | date }}</a></li>
+        {% endfor %}
+    </ul>
 
 
 
@@ -28,5 +27,5 @@
     {#<h2>{%  if variablePartie.gagnant == true %} <span class="text-success">Partie Gagnée</span> {% elseif variablePartie.gagnant == false %} <span class="text-danger text-white">Partie Perdu</span> {% endif %}</h2>#}
 
 
-    <a href="{{ path('joueur_homepage') }}"> <button>Retour</button></a>
+    <a href="{{ path('tournois_homepage') }}"> <button>Retour</button></a>
 {% endblock %}

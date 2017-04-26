@@ -61,6 +61,49 @@ class TournoisController extends Controller
     }
 
     /**
+     * @Route("/historique", name="historique_mes_tournois")
+     */
+    public function historiqueAction()
+    {
+        $user = $this->getUser();
+
+//        $em = $this->getDoctrine()->getManager();
+
+
+//        $tournoi = $em->getRepository('AppBundle:User')->findOneBy(array(),array('id' => 'DESC'));
+
+        return $this->render('AppBundle:tournois:historique.html.twig', ['user'=> $user]);
+    }
+
+    /**
+     * @param Tournois $id
+     *
+     * @Route("/historique/{id}", name="historique_tournoi")
+     */
+    public function historiqueTournoisAction(Tournois $id)
+    {
+        $user = $this->getUser();
+
+        $tournoi = $id;
+//        $em = $this->getDoctrine()->getManager();
+//        $tournoi = $em->getRepository('AppBundle:Tournois')->findOneBy(array(),array('id' => 'DESC'));
+
+        $partie = $this->getDoctrine()->getRepository('AppBundle:Partie')->findOneBy(array('tournois' => $id),array('id' => 'DESC'));;
+
+        $scoreJ1 = $partie->getPartieScoreJoueur1();
+        $scoreJ2 = $partie->getPartieScoreJoueur2();
+
+        if ($scoreJ1>$scoreJ2){
+            $gagnant = $partie->getJoueur1();
+        }else{
+            $gagnant = $partie->getJoueur2();
+        }
+
+
+        return $this->render('AppBundle:tournois:historiqueTournoi.html.twig', ['user'=> $user, 'tournoi'=>$tournoi, 'gagnant'=>$gagnant]);
+    }
+
+    /**
      * @Route("/add", name="creer_tournois")
      */
     public function creerTournoisAction(Request $request)
@@ -83,11 +126,26 @@ class TournoisController extends Controller
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            // $em = $this->getDoctrine()->getManager();
-            // $em->persist($task);
-            // $em->flush();
+             $em = $this->getDoctrine()->getManager();
 
-            $session->getFlashBag()->add('success', 'Tournois created');
+//             $tournois->addUser($user);
+
+             $em->persist($tournois);
+             $em->flush();
+
+            $tournoi = $em->getRepository('AppBundle:Tournois')->findOneBy(array(),array('id' => 'DESC'));
+
+            $user->addTournois($tournoi);
+
+            $em->flush();
+
+            $url = $this->generateUrl(
+                'afficher_tournois',
+                array('id' => $tournoi->getId())
+            );
+
+
+            $session->getFlashBag()->add('success', '<a href="'.$url.'"> Tournoi créé</a>');
 
             return $this->redirectToRoute('creer_tournois');
         }
@@ -98,7 +156,7 @@ class TournoisController extends Controller
 
 
     /**
-     * @param Tournois $id
+     * @param Tournois/= $id
      *
      * @Route("/{id}", name="afficher_tournois")
      */
@@ -128,6 +186,8 @@ class TournoisController extends Controller
             }
         }
 
+        $parties=null;
+        $bloc =null;
         $match = array();
         if ($tournois->getTournoisNombreJoueurs() == $nbParticipants){
             $isComplet = true;
@@ -167,6 +227,7 @@ class TournoisController extends Controller
 
             $bloc['bloc1'][] = array();
             $bloc['bloc2'][] = array();
+            $bloc['final'][] = array();
 
             $lastIdMatch = end($parties);
             $lastIdMatch = $lastIdMatch->getId();
@@ -204,11 +265,27 @@ class TournoisController extends Controller
                 }
             }
 
-            dump($totalParties, $totalmatchdebut, $nbPartiesRestante, $parties, $bloc);
-
-//            die();
+//            dump($totalParties, $totalmatchdebut, $nbPartiesRestante, $parties, $bloc);
 
 
+
+            if ($bloc['final'][1]->getPartieDateFin()!=null){
+                $partieFinie = true;
+
+                $Fj1 = $bloc['final'][1]->getPartieScoreJoueur1();
+                $Fj2 = $bloc['final'][1]->getPartieScoreJoueur1();
+
+                if ($Fj1>$Fj2){
+                    $victoire = $bloc['final'][1]->getJoueur1();
+                }else{
+                    $victoire = $bloc['final'][1]->getJoueur2();
+                }
+
+
+            }else{
+                $partieFinie = false;
+                $victoire = null;
+            }
             $tabPartieAJouer = array();
 
             foreach ($bloc as $match) {
@@ -234,11 +311,11 @@ class TournoisController extends Controller
 //                            dump($gagnant);
 
                             if ($totalmatchdebut == 2) {
-                                $final = $bloc['final'];
+                                $lastPartie = $bloc['final'][1];
 
-                                foreach ($final as $partie) {
-                                    $lastPartie = $partie;
-                                }
+//                                foreach ($final as $partie) {
+//                                    $lastPartie = $partie;
+//                                }
 
 
                                 if ($lastPartie->getJoueur1() === null) {
@@ -258,68 +335,189 @@ class TournoisController extends Controller
                             } elseif ($totalmatchdebut / 2 == 2) {
 //
                                 $bloc2 = $bloc['bloc2'];
+                                $partieFinal = $bloc['final'][1];
 
-                                foreach ($bloc2 as $key => $partie) {
-
-                                    $lastPartie='';
-                                    $tab2J1 =null;
-                                    $tab2J2=null;
-//                                    dump($key);
-                                    if ($key != 0) {
-//                                        dump($partie);
-//                                        die();
-
-                                        if ($partie->getPartieDateFin() === null && $partie->getJoueur1() != null || $partie->getJoueur2() != null ) {
-                                            $tab2J1 = $partie->getJoueur1();
-                                            $tab2J2 = $partie->getJoueur2();
-
-                                            dump($tab2J1, $tab2J2);
-//                                            die('prout');
-                                        }elseif ($partie->getPartieDateFin() != null && $partie->getJoueur1() === null || $partie->getJoueur2() === null) {
-
-                                            if ($partie->getJoueur1() != $gagnant || $partie->getJoueur2() != $gagnant) {
-                                                $lastPartie = $partie;
+                                $premierePartie = $bloc2[1];
+                                $dernierePartie = end($bloc2);
 
 
-//                                                dump('prout '. $lastPartie->getId());
+                                if ($premierePartie->getPartieDateFin() === null && $premierePartie->getJoueur1() === null || $premierePartie->getJoueur2() === null )
+                                {
+//                                    dump('partie 1');
+                                    $tabPart = array();
+                                    for ($i=1; $i < 3;$i++)
+                                    {
+                                        $getpartie = $bloc['bloc1'][$i];
 
-                                                array_push($tabPartieAJouer, $partie);
-
-//                                                dump($gagnant);
-                                            }
-
-//                                            break;
-                                        }
-//                                    }dump($partie);
-
+                                        array_push($tabPart, $getpartie);
                                     }
 
+                                    foreach ($tabPart as $partie)
+                                    {
+                                        $sJ1 = $partie->getPartieScoreJoueur1();
+                                        $sJ2 = $partie->getPartieScoreJoueur2();
 
-//die();
-                                    if ($lastPartie) {
-
-                                        if ($lastPartie->getJoueur1() === null) {
-
-                                            if ($tab2J1 != $gagnant && $tab2J1 != null){
-                                                $lastPartie->setJoueur1($gagnant);
-
+                                        if ($sJ1>$sJ2)
+                                        {
+                                            if ($dernierePartie->getJoueur1() === null){
+                                                $dernierePartie->setJoueur1($partie->getJoueur1());
+                                                $em->flush();
+                                            }else{
+                                                $dernierePartie->setJoueur2($partie->getJoueur1());
+                                                $em->flush();
+                                            }
+//                                            dump('set j1');
+                                        }else{
+                                            if ($dernierePartie->getJoueur1() === null){
+                                                $dernierePartie->setJoueur1($partie->getJoueur2());
+//                                                dump('set j2 en j1');
+                                                $em->flush();
+                                            }else{
+                                                $dernierePartie->setJoueur2($partie->getJoueur2());
+//                                                dump('set j2 en j2');
                                                 $em->flush();
                                             }
 
 
-                                        } elseif ($lastPartie->getJoueur2() === null) {
-
-                                            if ($tab2J2 != $gagnant && $tab2J1 != null){
-                                                $lastPartie->setJoueur2($gagnant);
-
-                                                $em->flush();
-                                            }
-                                        } else {
-
                                         }
                                     }
-
                                 }
+
+                                if ($dernierePartie->getPartieDateFin() === null && $dernierePartie->getJoueur1() === null || $dernierePartie->getJoueur2() === null )
+                                {
+//                                    dump('partie 2');
+                                    $tabPart = array();
+                                    for ($i=3; $i < 5;$i++)
+                                    {
+                                        $getpartie = $bloc['bloc1'][$i];
+
+                                        array_push($tabPart, $getpartie);
+                                    }
+
+                                    foreach ($tabPart as $partie)
+                                    {
+                                        $sJ1 = $partie->getPartieScoreJoueur1();
+                                        $sJ2 = $partie->getPartieScoreJoueur2();
+
+                                        if ($sJ1>$sJ2)
+                                        {
+                                            if ($dernierePartie->getJoueur1() === null){
+                                                $dernierePartie->setJoueur1($partie->getJoueur1());
+                                                $em->flush();
+                                            }else{
+                                                $dernierePartie->setJoueur2($partie->getJoueur1());
+                                                $em->flush();
+                                            }
+//                                            dump('set j1');
+                                        }else{
+                                            if ($dernierePartie->getJoueur1() === null){
+                                                $dernierePartie->setJoueur1($partie->getJoueur2());
+//                                                dump('set j2 en j1');
+                                                $em->flush();
+                                            }else{
+                                                $dernierePartie->setJoueur2($partie->getJoueur2());
+//                                                dump('set j2 en j2');
+                                                $em->flush();
+                                            }
+
+
+                                        }
+                                    }
+                                }
+
+                                if($partieFinal->getPartieDateFin()===null){
+
+                                    if ($premierePartie->getPartieDateFin() != null && $dernierePartie->getPartieDateFin() != null)
+                                    {
+                                        $p1sJ1 = $premierePartie->getPartieScoreJoueur1();
+                                        $p1sJ2 = $premierePartie->getPartieScoreJoueur2();
+
+                                        if ($p1sJ1 > $p1sJ2){
+                                            $partieFinal->setJoueur1($premierePartie->getJoueur1());
+                                            $em->flush();
+                                        }else{
+                                            $partieFinal->setJoueur1($premierePartie->getJoueur2());
+                                            $em->flush();
+                                        }
+                                        $p2sJ1 = $dernierePartie->getPartieScoreJoueur1();
+                                        $p2sJ2 = $dernierePartie->getPartieScoreJoueur2();
+
+                                        if ($p2sJ1 > $p2sJ2){
+                                            $partieFinal->setJoueur2($dernierePartie->getJoueur1());
+                                            $em->flush();
+                                        }else{
+                                            $partieFinal->setJoueur2($dernierePartie->getJoueur2());
+                                            $em->flush();
+                                        }
+//                                        die();
+                                    }
+                                }else{
+                                    $tournois->setTournoisDateFin(new \DateTime("now"));
+                                    $em->flush();
+                                }
+
+//                                foreach ($bloc2 as $key => $partie) {
+//
+//                                    $lastPartie='';
+//                                    $tab2J1 =null;
+//                                    $tab2J2=null;
+////                                    dump($key);
+//                                    if ($key != 0) {
+////                                        dump($partie);
+////                                        die();
+//
+//                                        if ($partie->getPartieDateFin() === null && $partie->getJoueur1() != null || $partie->getJoueur2() != null ) {
+//                                            $tab2J1 = $partie->getJoueur1();
+//                                            $tab2J2 = $partie->getJoueur2();
+//
+//                                            dump($partie);
+////                                            die('prout');
+//                                        }elseif ($partie->getPartieDateFin() === null && $partie->getJoueur1() === null || $partie->getJoueur2() === null) {
+//
+//                                            if ($partie->getJoueur1() != $gagnant || $partie->getJoueur2() != $gagnant) {
+//                                                $lastPartie = $partie;
+//
+//
+////                                                dump('prout '. $lastPartie->getId());
+//
+//                                                array_push($tabPartieAJouer, $partie);
+//
+////                                                dump($gagnant);
+//                                            }
+//
+////                                            break;
+//                                        }
+////                                    }dump($partie);
+//
+//                                    }
+//
+//
+////die();
+//                                    if ($lastPartie) {
+//
+//                                        if ($lastPartie->getJoueur1() === null) {
+//
+//                                            if ($tab2J1 != $gagnant || $tab2J1 === null){
+////                                                $lastPartie->setJoueur1($gagnant);
+//
+//                                                dump($gagnant->getId().' j1 ->'.$key);
+////                                                $em->flush();
+//                                            }
+//
+//
+//                                        } elseif ($lastPartie->getJoueur2() === null) {
+//
+//                                            if ($tab2J2 != $gagnant || $tab2J1 === null){
+////                                                $lastPartie->setJoueur2($gagnant);
+//                                                dump($gagnant.' j2');
+////                                                $em->flush();
+//                                            }
+//                                        } else {
+//
+//                                        }
+//                                    }
+//
+//                                }
 //                                break;
 //                            dump($bloc['bloc2']);
                             }
@@ -328,60 +526,60 @@ class TournoisController extends Controller
                     }
                 }
             }
-            dump($tabPartieAJouer);
-            die();
+//            dump($tabPartieAJouer);
+//            die();
 
-            foreach ($parties as $partie) {
-                if ($partie->getPartieDateFin() != null)
-                {
-
-//                    $index = current($parties);
-
-                    $idPartie = $partie->getId();
-
-                    $scoreJ1 = $partie->getPartieScoreJoueur1();
-                    $scoreJ2 = $partie->getPartieScoreJoueur2();
-
-                    if ($scoreJ1 > $scoreJ2 )
-                    {
-                        $gagnant = $partie->getJoueur1()->getId();
-                    }else{
-                        $gagnant = $partie->getJoueur2()->getId();
-                    }
-
-//                    for ($i=0; ....;$i++)
-//                    {
+//            foreach ($parties as $partie) {
+//                if ($partie->getPartieDateFin() != null)
+//                {
 //
+////                    $index = current($parties);
+//
+//                    $idPartie = $partie->getId();
+//
+//                    $scoreJ1 = $partie->getPartieScoreJoueur1();
+//                    $scoreJ2 = $partie->getPartieScoreJoueur2();
+//
+//                    if ($scoreJ1 > $scoreJ2 )
+//                    {
+//                        $gagnant = $partie->getJoueur1()->getId();
+//                    }else{
+//                        $gagnant = $partie->getJoueur2()->getId();
 //                    }
-
-
-
-                    $toto = $totalmatchdebut/2;
-
-                    dump($gagnant);
-                    $i = 0;
-                    while ($value = current($parties)) {
-//                        if ($value == $cartePoserId) {
-//                            array_splice($mainJoueur1, $i, 1);
-//                        }
-//                        dump($i);
-                            if ($i > $totalmatchdebut-1)
-                            {
-                                dump($value->getId());
-
-                                $find = $this->getDoctrine()->getRepository('AppBundle:Partie')->find($value->getId());
-
-                                dump($find->getJoueur1());
-                            }
-
-//                            dump($value->getId());
-                        next($parties);
-
-                        $i++;
-                    }
-//                    die();
-                }
-            }
+//
+////                    for ($i=0; ....;$i++)
+////                    {
+////
+////                    }
+//
+//
+//
+//                    $toto = $totalmatchdebut/2;
+//
+//                    dump($gagnant);
+//                    $i = 0;
+//                    while ($value = current($parties)) {
+////                        if ($value == $cartePoserId) {
+////                            array_splice($mainJoueur1, $i, 1);
+////                        }
+////                        dump($i);
+//                            if ($i > $totalmatchdebut-1)
+//                            {
+//                                dump($value->getId());
+//
+//                                $find = $this->getDoctrine()->getRepository('AppBundle:Partie')->find($value->getId());
+//
+//                                dump($find->getJoueur1());
+//                            }
+//
+////                            dump($value->getId());
+//                        next($parties);
+//
+//                        $i++;
+//                    }
+////                    die();
+//                }
+//            }
 //            for ($i = 0; $i <= $nbParticipants/2;$i+=2)
 //            {
 //
@@ -435,6 +633,7 @@ class TournoisController extends Controller
 //            }
 //            die();
 
+
         }else{
             $isComplet = false;
         }
@@ -478,7 +677,7 @@ class TournoisController extends Controller
 
 
 
-        return $this->render('AppBundle:tournois:afficherTournois.html.twig', ['user'=> $user, 'tournois' => $tournois, 'nbParticipants' => $nbParticipants, 'isComplet' => $isComplet, 'participe' => $participe, 'match' => $match, 'part'=>$participants, 'parties'=>$parties, 'bloc'=>$bloc]);
+        return $this->render('AppBundle:tournois:afficherTournois.html.twig', ['user'=> $user, 'tournois' => $tournois, 'nbParticipants' => $nbParticipants, 'isComplet' => $isComplet, 'participe' => $participe, 'match' => $match, 'part'=>$participants, 'parties'=>$parties, 'bloc'=>$bloc, 'partieFinie'=> $partieFinie, 'victoire'=>$victoire ]);
     }
 
 //    creer une nouvelle partie dans le tournois

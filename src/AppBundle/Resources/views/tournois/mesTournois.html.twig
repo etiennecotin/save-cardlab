@@ -9,7 +9,7 @@
     <br>
 
     <ul>
-        {% for tournois in user.tournois %}
+        {% for tournois in user.tournois if tournois.tournoisDateFin == null %}
             <li> <a href="{{ path('afficher_tournois', {'id':tournois.id}) }}">{{ tournois.tournoisNom }}</a> </li>
         {% endfor %}
     </ul>

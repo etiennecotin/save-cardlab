@@ -5,12 +5,13 @@
 
 
     <div class="container">
-    <h2>creer un tournois</h2>
+    <h2>Créer un tournoi</h2>
     <br>
 
     <form action="{{ path('creer_tournois') }}" method="post">
 
         {#{{ form_start(form) }}#}
+        {% form_theme form 'bootstrap_3_layout.html.twig' %}
         {{ form_widget(form) }}
         {{ form_rest(form) }}
         <input type="submit" value="Créer">
@@ -20,7 +21,7 @@
     {% if app.session.flashBag.has('success') %}
         <div class="alert alert-success">
             {% for msg in app.session.flashBag.get('success') %}
-                {{ msg }}
+                {{ msg|raw }}
             {% endfor %}
         </div>
     {% endif %}

@@ -10,40 +10,52 @@
 
 
     {% if isComplet == true %}
-        <h3>{{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }} Le tournois est complet</h3>
+        <h3>{{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }} Le tournoi est complet</h3>
     {% else %}
         <h3>{{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }}</h3>
     {% endif %}
-
+    {% if participe == true %}
+        <p>Je participe au tournoi</p>
+    {% endif %}
     {% if isComplet == false and participe == false and isComplet == false %}
         <form action="" method="post">
-            <input type="submit" name="participer" value="Participer au tournois">
+            <input type="submit" name="participer" value="Participer au tournoi">
         </form>
     {% elseif participe == true and isComplet == false %}
         <form action="" method="post">
-            <input type="submit" name="quitter" value="Quitter le tournois">
+            <input type="submit" name="quitter" value="Quitter le tournoi">
         </form>
 
     {% endif %}
 
     {% if isComplet == true %}
-        <h4>le tournois a commencé</h4>
+
+        {% if partieFinie == true %}
+            <h4>le tournoi est fini</h4>
+
+            <h5>le gagnant est {{ victoire.username }}</h5>
+            {% if participe == true %}
+                <p><a href="{{ path('historique_tournoi', {'id':tournois.id} ) }}">Voir le tournois dans l'historique</a></p>
+            {% endif %}
+
+        {% else %}
+            <h4>le tournoi a commencé</h4>
+        {% endif %}
 
 
-        {{ dump(match) }}
-        {{ dump(parties) }}
-        {{ dump(bloc) }}
+        {#{{ dump(match) }}#}
+        {#{{ dump(parties) }}#}
+        {#{{ dump(bloc) }}#}
 
-        {% for partie in bloc %}
-            <h3>manche {{ loop.index }}</h3>
+        {% for key, partie in bloc %}
+            <h3>Manche {{ loop.index }}</h3>
             {% for key, partie in partie  %}
-                {% if key == 0%}
-
+                {% if key == 0 %}
                     {% else %}
                         {% if partie.joueur1 == null or partie.joueur2 == null %}
-                            <h4>la partie na pas encore de joueurs</h4>
+                            <h4>La partie n'a pas encore de joueurs</h4>
                             {% else %}
-                                <h4>partie {{ loop.index-1 }} entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</h4>
+                                <h4>Partie {{ loop.index-1 }} entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</h4>
                                 <p><a href="{{ path('afficher_tounois_partie', {'idTourois':tournois.id,'id':partie.id} ) }}">voir le match</a></p>
                         {% endif %}
 
@@ -51,35 +63,10 @@
 
             {% endfor %}
         {% endfor %}
-        {% for match in match %}
-            <p>Match {{ loop.index }}</p>
-            <div>
-                <ul>
-
-                    {% for joueur in match %}
-                        {% if not loop.last %}
-                            {{ joueur.username }}
-                            {% if not loop.last %}
-                                /
-                            {% endif %}
-
-                        {% else %}
-                                <p><a href="{{ path('afficher_tounois_partie', {'idTourois':tournois.id,'id':joueur.id} ) }}">voir le match</a></p>
-                        {% endif %}
-
-
-                    {% endfor %}
-
-
-                </ul>
-            </div>
-        {% endfor %}
-
-    {% endif %}
-    {% if participe == true %}
-        <p>Je participe au tournois</p>
     {% endif %}
 
+    <br>
+    <h4>Liste des participants</h4>
     {% for joueur in tournois.getUsers %}
         <p>{{ joueur.username }}</p>
 
