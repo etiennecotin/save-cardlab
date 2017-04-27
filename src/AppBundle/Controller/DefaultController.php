@@ -14,6 +14,12 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
+
+        $user = $this->getUser();
+
+        if ($user != null){
+            return $this->redirect( $this->generateUrl('joueur_partie') );
+        }
         return $this->render('AppBundle:Default:index.html.twig');
     }
 

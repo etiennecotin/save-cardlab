@@ -5,6 +5,8 @@
 
 <div class="overlay"></div>
 
+<a href="{{ path('joueur_partie') }}"><button type="button" name="button" id="bouton_accueil">Quitter la partie</button></a>
+
 <div class="temporaire">
 
 </div>
@@ -14,184 +16,117 @@
 
 
     <div class="tapis">
+
+        <div class="nom nom_ennemi">{{ variablePartie.adversaire.username }} {% if variablePartie.montour == false %} (*){% endif %}</div>
+        <div class="nom nom_joueur">{{ variablePartie.me.username }} {% if variablePartie.montour == true %} (*) {% endif %}</div>
+
+
         <img id="tasse" src="{{ asset('assets/img/tasse.png')}}" alt="">
+
+
         <div class="score_ennemi">
             <img src="{{ asset('assets/img/score_top.png')}}" alt="">
             <p>{{ variablePartie.adversaireScore }}</p>
         </div>
+
+
         <div class="cartes">
 
-        {#{% if variablePartie.adversaireTerrain %}#}
-            {#<div class="pile" >#}
-            {#{{ dump(variablePartie.adversaireTerrain) }}#}
-            {#{% for key, cartesTerrain in variablePartie.adversaireTerrain %}#}
-                {#<div class="col-sm-2" >#}
-                    {#|{{ key }}|#}
-{#<div class="pile" >#}
-{#<div class="drop_ennemi">#}
-                    {#{% for carte in cartesTerrain %}#}
+        {% if variablePartie.adversaireTerrain %}
+            <div class="conteneur_drop_ennemi">
+            {% for key, cartesTerrain in variablePartie.adversaireTerrain %}
+
+                    <div class="drop_ennemi">
+                    {% for carte in cartesTerrain %}
 
 
                         {#{{ loop.index }}#}
-                           {#{% if loop.last %}#}
-                                {#{% for key, carte in carte|slice(0, 1) %}#}
+                           {% if loop.last %}
+                                {% for key, carte in carte|slice(0, 1) %}
 
                                       {#point du terrain : {{ carte }}#}
-                                      {#<div class="min_score_ennemi">#}
-                                        {#<img src="{{ asset('assets/img/score_top.png')}}" alt="">#}
-                                        {#<p>{{ carte }}</p>#}
-                                    {#</div>#}
-                                {#{% endfor %}#}
-                           {#{% else %}#}
+                                      <div class="min_score_ennemi">
+                                            <img src="{{ asset('assets/img/score_top.png')}}" alt="">
+                                            <p>{{ carte }}</p>
+                                        </div>
+                                {% endfor %}
+                           {% else %}
                             {#<div class="drop_ennemi">#}
-                                {#{% for key, carte in carte|slice(0, 1) %}#}
+                                {% for key, carte in carte|slice(0, 1) %}
 
                             {#<div class="carte1">#}
-                                {#{% if cartes3[carte].carteExtra == true %}#}
+                                {% if cartes3[carte].carteExtra == true %}
                                     {#<strong>extra</strong>#}
-                                {#{% else %}#}
+                                {% else %}
                                     {#<strong>{{ cartes3[carte].carteValeur }}</strong>#}
-                                {#{% endif %}#}
-                                {#<img class="carte_jouee" src="{{ asset(cartes3[carte].carteImage) }}" alt="">#}
+                                {% endif %}
+                                <img class="carte_jouee" src="{{ asset(cartes3[carte].carteImage) }}" alt="" />
                                 {#<p>{{ cartes3[carte].carteNom }}</p>#}
                                 {#<p>{{ cartes3[carte].carteCategorie.libelle }}</p>#}
                             {#</div>#}
-                            {#{% endfor %}#}
+                            {% endfor %}
                             {#</div>#}
-                           {#{% endif %}#}
+                           {% endif %}
 
-                    {#{% else %}#}
-                        {#Pas encore de cartes posées#}
+                    {% else %}
+                        Pas encore de cartes posées
+                    {% endfor %}
+                    </div>
+                {#</div>#}
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Pas encore de cartes posées</p>
+        {% endif %}
+
+
+
+
+
+
+                {% if variablePartie.partieDefausse %}
+
+             <div class="defausse">
+            {% for key, cartesDefausse in variablePartie.partieDefausse %}
+                <button >
+                {% for carte in cartesDefausse %}
+
+                            {#<img src="{{ asset(cartes3[carte].carteImage) }}" alt="">#}
+                            <img src="{{ asset(cartes3[carte].carteImage) }}" alt="" >
+                        {% if variablePartie.montour == true %}
+                            {% if variablePartie.activePose == false %}
+                                <form action="" method="post">
+                                    <input type="hidden" name="recupererId" value="{{ cartes3[carte].id }}">
+                                    <input type="hidden" name="recupererCategorieId" value="{{ cartes3[carte].carteCategorie.id }}">
+                                    <input type="submit" value="recuperer" name="recuperer">
+                                </form>
+                            {% endif %}
+                        {% endif %}
+
+
+                {% else %}
+                    {#{% for carte in cartesDefausse %}#}
+                    {#<button><img src="{{ asset(cartes3[carte].carteCategorie.couleur) }}" alt=""></button>#}
                     {#{% endfor %}#}
-                    {#</div>#}
+                    <img src="{{ asset('assets/img/cartes/trump/Trump_Objectif.png')}}" alt="">
+                {% endfor %}
+                </button>
                 {#</div>#}
-            {#{% endfor %}#}
-            {#</div>#}
-        {#{% else %}#}
-            {#<p>Pas encore de cartes posées</p>#}
-        {#{% endif %}#}
 
-            <div class="pile">
-
-
-                <div class="drop_ennemi"></div>
+            {% endfor %}
             </div>
 
-            <div class="pile" id="trump">
-
-
-                {#<div class="drop_ennemi"></div>#}
-
-
-                <div class="min_score_ennemi">
-                    <img src="{{ asset('assets/img/score_top.png')}}" alt="">
-                    <p>5</p>
-                </div>
-
-
-
-                <img src="{{ asset('assets/img/cartes/trump/Trump_Objectif.png')}}" alt="pile de Grump">
-
-
-
-
-                {#<div class="min_score_perso">#}
-                    {#<img src="{{ asset('assets/img/score_bottom.png')}}" alt="">#}
-                    {#<p>3</p>#}
-                {#</div>#}
-                {#<div class="drop"></div>#}
-
-
-
-            </div>
-
-            <div class="pile">
-
-
-                <div class="drop_ennemi"></div>
-            </div>
-            <div class="pile" id="hollande">
-                {#<div class="drop_ennemi"></div>#}
-                <div class="min_score_ennemi">
-                    <img src="{{ asset('assets/img/score_top.png')}}" alt="">
-                    <p>5</p>
-                </div>
-                <img src="{{ asset('assets/img/cartes/hollande/Hollande_Objectif.png')}}" alt="pile de Hallande">
-                {#<div class="min_score_perso">#}
-                    {#<img src="{{ asset('assets/img/score_bottom.png')}}" alt="">#}
-                    {#<p>3</p>#}
-                {#</div>#}
-                {#<div class="drop"></div>#}
-            </div>
-
-            <div class="pile">
-                <div class="drop_ennemi"></div>
-            </div>
-            <div class="pile" id="kim">
-                {#<div class="drop_ennemi"></div>#}
-                <div class="min_score_ennemi">
-                    <img src="{{ asset('assets/img/score_top.png')}}" alt="">
-                    <p>5</p>
-                </div>
-                <img src="{{ asset('assets/img/cartes/kim/Kim_Objectif.png')}}" alt="pile de Kim Jun Un">
-                {#<div class="min_score_perso">#}
-                    {#<img src="{{ asset('assets/img/score_bottom.png')}}" alt="">#}
-                    {#<p>3</p>#}
-                {#</div>#}
-                {#<div class="drop"></div>#}
-            </div>
-
-            {#<div class="pile">#}
-                {#<div class="drop_ennemi"></div>#}
-            {#</div>#}
-            <div class="pile" id="poutine">
-                <div class="drop_ennemi"></div>
-                <div class="min_score_ennemi">
-                    <img src="{{ asset('assets/img/score_top.png')}}" alt="">
-                    <p>5</p>
-                </div>
-            </div>
-             <div class="pile" id="poutine">
-                <img src="{{ asset('assets/img/cartes/poutine/Poutine_Objectif.png')}}" alt="pile de Poutine">
-             </div>
-            {#<div class="pile" id="poutine">#}
-                {#<div class="min_score_perso">#}
-                    {#<img src="{{ asset('assets/img/score_bottom.png')}}" alt="">#}
-                    {#<p>3</p>#}
-                {#</div>#}
-                {#<div class="drop"></div>#}
-            {#</div>#}
-
-
-            <div class="pile">
-                <div class="drop_ennemi"></div>
-            </div>
-             <div class="pile" id="reine">
-                {#<div class="drop_ennemi"></div>#}
-                <div class="min_score_ennemi">
-                    <img src="{{ asset('assets/img/score_top.png')}}" alt="">
-                    <p>5</p>
-                </div>
-                <img src="{{ asset('assets/img/cartes/elisabeth/Elisabeth_Objectif.png')}}" alt="pile d'Elizabeth II">
-                {#<div class="min_score_perso">#}
-                    {#<img src="{{ asset('assets/img/score_bottom.png')}}" alt="">#}
-                    {#<p>3</p>#}
-                {#</div>#}
-                {#<div class="drop"></div>#}
-            </div>
+        {% else %}
+            <p>Pas encore de cartes posées</p>
+        {% endif %}
 
 
             {#<p>Mon terrain</p>#}
             {% if variablePartie.monTerrain %}
 
-            {#{{ dump(variablePartie.monTerrain) }}#}
-            {#<div class="row">#}
+             <div class="conteneur_drop">
             {% for key, cartesTerrain in variablePartie.monTerrain %}
 
-                {#<div class="col-sm-2">#}
-                    {#|{{ key }}|#}
-                    {#{{ dump(cartesTerrain) }}#}
-                    <div class="pile" >
                         <div class="drop">
                         {% for carte in cartesTerrain %}
                                {#{{ loop.index }}#}
@@ -210,41 +145,53 @@
 
                                     {% for key, carte in carte|slice(0, 1) %}
 
-                                    {#<div class="cartes2">#}
-                                        {#{% if cartes3[carte].carteExtra == true %}#}
-                                            {#<strong>extra</strong>#}
-                                        {#{% else %}#}
-                                            {#<strong>{{ cartes3[carte].carteValeur }}</strong>#}
-                                        {#{% endif %}#}
-                                        <img class="carte_jouee" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
-                                        {#<p>{{ cartes3[carte].carteNom }}</p>#}
-                                        {#<p>{{ cartes3[carte].carteCategorie.libelle }}</p>#}
-                                    {#</div>#}
+
+                                        <img class="carte_jouee" src="{{ asset(cartes3[carte].carteImage) }}" alt="" style="width: 100%;">
+
                                     {% endfor %}
-                               {#</div>#}
                                {% endif %}
 
 
 
                         {% else %}
-                            {#<div class="drop"></div>#}
                         {% endfor %}
                         </div>
-                    </div>
             {% endfor %}
-
+        </div>
         {% else %}
             {#<p>Pas encore de cartes posées</p>#}
         {% endif %}
 
 
+            {% if variablePartie.montour == true %}
+                {% if variablePartie.activePose == false %}
+                    <form action="" method="post">
+                        {#<input type="submit" value="Piocher" name="piocher">#}
+
+                        <input type="hidden" name="piocher">
+                        <button class="pioche" type="submit" name="piocher">
+                            <img src="{{ asset('assets/img/cartes/pioche.png') }}" alt="pioche">
+                            <input type="hidden" value="Piocher" name="piocher">
+                        </button>
+                        <div class="pioche_nombre">
+                            <p>{{ variablePartie.carteRestante }}</p>
+                        </div>
+                    </form>
+                {% endif %}
+
+                {% else %}
+                    <button class="pioche">
+                        <img src="{{ asset('assets/img/cartes/pioche.png') }}" alt="pioche">
+                    </button>
+                    <div class="pioche_nombre">
+                        <p>{{ variablePartie.carteRestante }}</p>
+                    </div>
+            {% endif %}
 
 
 
-            <div class="pioche">
-                <img src="{{ asset('assets/img/cartes/pioche.png') }}" alt="pioche">
-            </div>
         </div>
+
         <div class="score_perso">
             <img src="{{ asset('assets/img/score_bottom.png') }}" alt="">
             <p>{{ variablePartie.monScore }}</p>
@@ -261,158 +208,118 @@
     <img id="red_button" src="{{ asset('assets/img/boutton.png') }}" alt="">
 
     <div class="main_ennemi">
-
-
         {% for cartesTerrain in variablePartie.adversaireCartes %}
                             <img  src="{{ asset('assets/img/cartes/doscartes.png') }}" alt="dos carte">
                 {% endfor %}
     </div>
 
     <div class="main_joueur">
-        {#<img class="carte carte_trump" src="img/cartes/trump/Trump_5.png" alt="">#}
-        {#<img class="carte carte_kim" src="img/cartes/kim/Kim_3.png" alt="">#}
-        {#<img class="carte carte_hollande" src="img/cartes/hollande/Hollande_9.png" alt="">#}
-        {#<img class="carte carte_elisabeth" src="img/cartes/elisabeth/Elisabeth_2.png" alt="">#}
-        {#<img class="carte carte_trump" src="img/cartes/trump/Trump_3.png" alt="">#}
-        {#<img class="carte carte_trump" src="img/cartes/trump/Trump_4.png" alt="">#}
-        {#<img class="carte carte_hollande" src="img/cartes/hollande/Hollande_3.png" alt="">#}
-        {#<img class="carte carte_poutine" src="img/cartes/poutine/Poutine_3.png" alt="">#}
 
         {% for carte in variablePartie.mesCartes %}
-            {#<div class="col-sm-2">#}
-                {#<div class="cartes2">#}
-                    {% if cartes3[carte].carteExtra == true %}
-                        {#<strong>extra</strong>#}
-                    {% else %}
-                        {#<strong>{{ cartes3[carte].carteValeur }}</strong>#}
-                    {% endif %}
-                    <img class="carte" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
-                    {#<p>{{ cartes3[carte].carteNom }}</p>#}
-                    {#<p>{{ carte.carteLibelle }}</p>#}
 
 
-                    {% if variablePartie.montour == true %}
-
-                        {% if variablePartie.activePose == true %}
-                            <form action="" method="post">
-                                <input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">
-                                <input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">
-                                <input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">
-                                <input type="hidden" name="cartePoserExtra" value="{{ cartes3[carte].carteExtra }}">
-                                <input type="submit" value="poser" name="poser">
-                            </form>
-                            <form action="" method="post">
-                                <input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">
-                                <input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">
-                                <input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">
-                                <input type="submit" value="defausser" name="defausser">
-                            </form>
-                        {% endif %}
+                    <img class="carte" src="{{ asset(cartes3[carte].carteImage) }}" data-modal="{{ cartes3[carte].id }}">
 
 
-                    {% endif %}
-                {#</div>#}
-            {#</div>#}
+                    {#{% if variablePartie.montour == true %}#}
+
+                        {#{% if variablePartie.activePose == true %}#}
+                            {#<form action="" method="post">#}
+                                {#<input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">#}
+                                {#<input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">#}
+                                {#<input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">#}
+                                {#<input type="hidden" name="cartePoserExtra" value="{{ cartes3[carte].carteExtra }}">#}
+                                {#<input type="submit" value="poser" name="poser">#}
+                            {#</form>#}
+                            {#<form action="" method="post">#}
+                                {#<input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">#}
+                                {#<input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">#}
+                                {#<input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">#}
+                                {#<input type="submit" value="defausser" name="defausser">#}
+                            {#</form>#}
+                        {#{% endif %}#}
+
+
+                    {#{% endif %}#}
         {% endfor %}
     </div>
 
+
     <div class="chat">
-        <button>Messagerie en direct</button>
-    </div>
+        <div class="bouton_chat">
+            <h2>Messagerie</h2><button id="fermeture" type="button">X</button>
+        </div>
+        <div class="bloc_chat">
+            <div class="messages" id="zone-de-chat">
 
-    <div class="regles">
-        <header>
-            <h2>Règles du jeu</h2>
-        </header>
-        <div class="regles_content">
-            <h3>But du jeu</h3>
-            <p>Vous êtes un conseiller d’homme politique, vous devez aider les dirigeants à garder le pouvoir en complétant les suites de cartes pour chaque dirigeant.</p>
-            <p>En tant que conseiller votre rôle est d’accumuler les cartes « actions » numérotées sur chaque dirigeant pour marquer un maximum de point et les menez à un pouvoir prospère mais prenez garde le pouvoir corrompt !</p>
-            <h3>Comment jouer ?</h3>
-            <h4>1. Tour du joueur</h4>
-            <p>Chaque conseiller commence avec 8 cartes en main.</p>
-            <p> Le tour d’un conseiller se compose de 2 étapes :</p>
-            <p>
-                - Jouez une carte <br>
-                - Prendre une carte
-            </p>
-            <h4>2. Jouez une carte</h4>
-            <p>Lors de votre tour, vous pouvez :</p>
-            <p>Placer une carte « actions » ou « Hauts-faits » sur une zone de mandat. La carte y restera jusqu’à la fin de la partie. Poser une carte sur une zone de mandat doit être obligatoirement fait en ordre croissant. Les cartes ne doivent pas nécessairement se suivre.</p>
-            <p>-Défausser sur un dirigeant correspondant. Vous pouvez défausser si vous ne souhaitez pas posez de carte sur une zone de mandat. Il y a une pile de défausse par dirigeant.</p>
-            <p>- Les cartes « Hauts-faits » : Représentés par les bordures dorées, ces cartes doivent être posées en premier sur les zones de mandat, avant les cartes de valeur. Elles permettent de doubler, tripler, quadrupler (Pour 1,2 3 cartes bonus) vos gains ou... vos pertes.</p>
-            <h4>3. Prendre une carte</h4>
-            <p>- De la pioche</p>
-            <p>- Ou d'une des piles de défausse des dirigeants</p>
-            <p>/!\ Il est interdit de prendre une carte que vous avez défaussée dans le même tour de jeu !</p>
-            <h4>4. Fin de partie / Comptage de point</h4>
-            <p>La partie se termine lorsqu'un joueur prend la dernière carte de la pioche.</p>
-            <p>Chaque zone de mandat sur lesquelles au moins une carte « actions » a été posé coûte 20 points, ce coût est retiré à la valeur totale des cartes posées sur cette zone.
-                Le résultat est ensuite multiplié par le nombres de cartes « Hauts-faits » (x2, x3 ou x4)
-                Le score final est le total des points marqué pour les cinq dirigeants.</p>
-            <p>Exemple de comptage :</p>
-            <p>2 cartes « Hauts-faits » + 5 +9 +10 <br>-24 moins 20 (coût du conseil)<br>= 4 * 3 (2 cartes « Hauts-faits »)<br>= 12 points </p>
-            <p>1 carte « Hauts-faits » + 4 +5 +9 <br>-18 moins 20 (coût du conseil)<br>= -2 * 2 (1 carte « Hauts-faits »)<br>= -4 points</p>
-            <h4>5. Conseils</h4>
-            <p>Un dirigeant non conseillé ne coûte aucun point, vous n’êtes pas obligés de les conseiller tous.
-                Faites attentions au temps, un dirigeant mal conseillé et vous aurez des points négatifs !  </p>
-            <h4>6. Répartition des cartes</h4>
-            <p>Pour chaque dirigeant il y a : <br>
-                - 1 carte « actions » de chaque valeur de 2 à 10 <br>
-                - 3 cartes « Hauts-faits » (bordure dorée)</p>
 
+
+            {% for chat in variablePartie.chat %}
+
+                {% if chat.joueur.id == user.id %}
+                    {#<p></p>#}
+                    <p class="msg_joueur"><span>{{ chat.joueur.username }}</span> : {{ chat.message }}</p>
+                {% else %}
+                    {#<p style="color: green">{{ chat.message }}</p>#}
+                     <p class="msg_ennemi"><span>{{ chat.joueur.username }}</span> : {{ chat.message }}</p>
+                {% endif %}
+
+            {% endfor %}
+
+            </div>
+            <div class="formulaire">
+
+              <input type="hidden" name="pseudo" id="idJoueur" value="{{ variablePartie.me.id }}">
+              <input type="text" name="text" id="text"  onkeyup="setNotif()" placeholder="Message">
+              <input type="hidden" name="envoyer" id="submit">
+
+          </div>
         </div>
     </div>
+
+    {% for carte in variablePartie.mesCartes %}
+
+        <div class="modal" id="popup_jeu" data-modal="{{ cartes3[carte].id }}">
+            <button id="fermeture" type="button">X</button>
+            <img class="carte" src="{{ asset(cartes3[carte].carteImage) }}" >
+
+            {% if variablePartie.montour == true %}
+            {% if variablePartie.activePose == true %}
+                <form action="" method="post">
+                    <input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">
+                    <input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">
+                    <input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">
+                    <input type="hidden" name="cartePoserExtra" value="{{ cartes3[carte].carteExtra }}">
+                    {#<input >#}
+                    <button type="submit" value="poser" name="poser"><div class="button_int">Jouer</div></button>
+                </form>
+                <form action="" method="post">
+                    <input type="hidden" name="cartePoserId" value="{{ cartes3[carte].id }}">
+                    <input type="hidden" name="cartePoserValeur" value="{{ cartes3[carte].carteValeur }}">
+                    <input type="hidden" name="cartePoserCategorie" value="{{ cartes3[carte].carteCategorie.id }}">
+                    {#<input >#}
+                    <button type="submit" value="defausser" name="defausser"><div class="button_int">Défausser</div></button>
+                </form>
+            {% endif %}
+            {% endif %}
+
+
+        </div>
+
+        {% if variablePartie.montour == true %}
+
+
+
+
+        {% endif %}
+    {% endfor %}
 
 </div>
 
 {# ma partie #}
 <div class="body">
 
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-           <ul class=" nav navbar-nav">
 
-               {% if variablePartie.tournois != null %}
-                    <li> <a href="{{ path('afficher_tournois', {'id':variablePartie.tournois.id}) }}" title="Retour au partie"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </a>
-                    </li>
-               {% else %}
-                    <li> <a href="{{ path('joueur_partie') }} " title="Retour au partie"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </a>
-                    </li>
-                {% endif %}
-           </ul>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"> Partie entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</a>
-
-
-            </div>
-            <ul class=" nav navbar-nav center-nav ">
-                <li>
-                    <a class="text-center">score : {{ partie.joueur1.username }} {{ variablePartie.scoreJ1 }}, {{ partie.joueur2.username }} {{ variablePartie.scoreJ2 }}</a>
-                </li>
-                <li>
-                    <a class="text-center">Nombre de cartes restante : {{ variablePartie.carteRestante }}</a>
-                </li>
-                {% if variablePartie.tournois != null %}
-                    <li>
-                        <a class="text-center">Tournois : {{ variablePartie.tournois.tournoisNom }}</a>
-                    </li>
-                {% endif %}
-
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li> <a href="#">{% if variablePartie.montour == true %}C'est mon tour{% elseif variablePartie.montour == false %}Tour de l'adversaire{% endif %}</a></li>
-            </ul>
-
-        </div>
-    </nav>
 
 
     {#{% for carte in variablePartie.pioche %}#}
@@ -425,98 +332,9 @@
 
     {% elseif variablePartie.partieFin == false %}
 
-    <div class="container">
-        <h2>main de l'adversaire</h2>
 
-        <div class="col-sm-8">
-
-            <div class="row">
-                {% for cartesTerrain in variablePartie.adversaireCartes %}
-                    <div class="col-sm-3" >
-                        <div class="carte">
-                            <img class="img-responsive" src="{{ asset('assets/img/cartes/doscartes.png') }}" alt="dos carte">
-                        </div>
-
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-              <div class="panel-heading">Chat</div>
-              <div class="panel-body" id="zone-de-chat">
-                {#{{ dump(variablePartie.chat) }}#}
-                {% for chat in variablePartie.chat %}
-
-                    {% if chat.joueur.id == user.id %}
-                        <p>{{ chat.message }}</p>
-                    {% else %}
-                        <p style="color: green">{{ chat.message }}</p>
-                    {% endif %}
-
-                {% endfor %}
-              </div>
-              <div class="formulaire">
-
-                  <input type="hidden" name="pseudo" id="idJoueur" value="{{ variablePartie.me.id }}">
-                  <input type="text" name="text" id="text"  onkeyup="setNotif()" placeholder="Message">
-                  <input type="hidden" name="envoyer" id="submit">
-
-              </div>
-            </div>
-        </div>
-
-
-    </div>
     <hr>
-    <div class="container">
-        <p class="text-center">Plateau de jeu</p>
 
-        <h3>terrain de l'adversaire</h3>
-
-        {% if variablePartie.adversaireTerrain %}
-            <div class="row" >
-            {#{{ dump(variablePartie.adversaireTerrain) }}#}
-            {% for key, cartesTerrain in variablePartie.adversaireTerrain %}
-                <div class="col-sm-2" >
-                    {#|{{ key }}|#}
-
-                    {% for carte in cartesTerrain %}
-
-
-                        {#{{ loop.index }}#}
-                           {% if loop.last %}
-                                {% for key, carte in carte|slice(0, 1) %}
-
-                                      point du terrain : {{ carte }}
-                                {% endfor %}
-                           {% else %}
-                                {% for key, carte in carte|slice(0, 1) %}
-
-                            <div class="carte1">
-                                {% if cartes3[carte].carteExtra == true %}
-                                    <strong>extra</strong>
-                                {% else %}
-                                    <strong>{{ cartes3[carte].carteValeur }}</strong>
-                                {% endif %}
-                                <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
-                                <p>{{ cartes3[carte].carteNom }}</p>
-                                <p>{{ cartes3[carte].carteCategorie.libelle }}</p>
-                            </div>
-                        {% endfor %}
-                           {% endif %}
-
-                    {% else %}
-                        Pas encore de cartes posées
-                    {% endfor %}
-                </div>
-            {% endfor %}
-            </div>
-        {% else %}
-            <p>Pas encore de cartes posées</p>
-        {% endif %}
-
-    </div>
 
     <hr>
 
@@ -539,7 +357,7 @@
                         {% else %}
                             <strong>{{ cartes3[carte].carteValeur }}</strong>
                         {% endif %}
-                        <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
+                        {#<img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">#}
                         <p>{{ cartes3[carte].carteNom }}</p>
                         {#<p>{{ cartes3[carte].carteCategorie.libelle }}</p>#}
 
@@ -571,56 +389,6 @@
 
     <hr>
 
-    <div class="container">
-
-        <p>Mon terrain</p>
-        {% if variablePartie.monTerrain %}
-
-            {#{{ dump(variablePartie.monTerrain) }}#}
-            <div class="row">
-            {% for key, cartesTerrain in variablePartie.monTerrain %}
-
-                <div class="col-sm-2">
-                    {#|{{ key }}|#}
-                    {#{{ dump(cartesTerrain) }}#}
-                    {% for carte in cartesTerrain %}
-                           {#{{ loop.index }}#}
-
-                           
-                           {% if loop.last %}
-                                {% for key, carte in carte|slice(0, 1) %}
-
-                                      point du terrain : {{ carte }}
-                                {% endfor %}
-                           {% else %}
-                                {% for key, carte in carte|slice(0, 1) %}
-
-                            <div class="cartes2">
-                                {% if cartes3[carte].carteExtra == true %}
-                                    <strong>extra</strong>
-                                {% else %}
-                                    <strong>{{ cartes3[carte].carteValeur }}</strong>
-                                {% endif %}
-                                <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
-                                <p>{{ cartes3[carte].carteNom }}</p>
-                                <p>{{ cartes3[carte].carteCategorie.libelle }}</p>
-                            </div>
-                        {% endfor %}
-                           {% endif %}
-
-
-
-                    {% else %}
-                        Pas encore de cartes posées
-                    {% endfor %}
-                </div>
-            {% endfor %}
-
-        {% else %}
-            <p>Pas encore de cartes posées</p>
-        {% endif %}
-
-    </div>
 
     <hr>
 
@@ -644,7 +412,7 @@
                     {% else %}
                         <strong>{{ cartes3[carte].carteValeur }}</strong>
                     {% endif %}
-                    <img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">
+                    {#<img class="img-responsive" src="{{ asset(cartes3[carte].carteImage) }}" alt="">#}
                     <p>{{ cartes3[carte].carteNom }}</p>
                     {#<p>{{ carte.carteLibelle }}</p>#}
 

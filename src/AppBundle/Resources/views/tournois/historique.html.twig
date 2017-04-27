@@ -1,31 +1,34 @@
-{% extends 'AppBundle::base.html.twig' %}
+{% extends 'AppBundle::base_jeu.html.twig' %}
 
 {% block body %}
-    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+    {% include 'AppBundle::Default/header.html.twig' with {'user': user.userPrenom } %}
+    <div class="jeu">
 
+        <div class="tapis">
+            <a href="classement.html" class="lien_gauche"><</a>
+            <a href="profil.html" class="lien_droit">></a>
 
-    {#<ul>#}
-    {#<li><a href="{{ path('joueur_partie') }}">Mes parties</a></li>#}
-    {#<li><a href="{{ path('joueur_partie_add') }}">Nouvelle Partie</a></li>#}
-    {#<li><a href="{{ path('joueur_partie_historique') }}">Historique de mes parties</a></li>#}
-    {#<li><a href="{{ path('joueur_partie_historique') }}">Voir le classement</a></li>#}
-    {#</ul>#}
-    <div class="container">
-    <h2>Historique de mes tournois</h2>
-    <br>
-    <ul>
-        {% for tournoi in user.tournois if tournoi.tournoisDateFin != null %}
-            {#{{ tournoi.tournoisNom }}#}
-            <li> <a href="{{ path('historique_tournoi', {'id':tournoi.id} ) }}">{{ tournoi.tournoisNom }} - {{ tournoi.tournoisDateFin | date }}</a></li>
-        {% endfor %}
-    </ul>
+            <div class="pages">
+                <h2>Historique de mes tournois</h2>
+                <hr>
+                <table>
+                    <tr id="entete">
+                        <td>Nom</td>
+                        <td>Date</td>
+                    </tr>
 
+                    {% for tournoi in user.tournois if tournoi.tournoisDateFin != null %}
+                        <tr>
+                            <td><a href="{{ path('historique_tournoi', {'id':tournoi.id} ) }}">{{ tournoi.tournoisNom }}</a></td>
+                            <td>{{ tournoi.tournoisDateFin | date }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <a href="{{ path('tournois_homepage') }}"><button>Retour</button></a>
+            </div>
 
+        </div>
+        {% include 'AppBundle::Default/image_plateau.html.twig'%}
+    </div>
 
-
-    <a href=""></a>
-    {#<h2>{%  if variablePartie.gagnant == true %} <span class="text-success">Partie Gagnée</span> {% elseif variablePartie.gagnant == false %} <span class="text-danger text-white">Partie Perdu</span> {% endif %}</h2>#}
-
-
-    <a href="{{ path('tournois_homepage') }}"> <button>Retour</button></a>
 {% endblock %}

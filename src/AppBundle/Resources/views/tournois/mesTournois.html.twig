@@ -1,21 +1,37 @@
-{% extends 'AppBundle::base.html.twig' %}
+{% extends 'AppBundle::base_jeu.html.twig' %}
 
 {% block body %}
-    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+    {% include 'AppBundle::Default/header.html.twig' with {'user': user.userPrenom } %}
+    <div class="jeu">
 
+        <div class="tapis">
+            <a href="classement.html" class="lien_gauche"><</a>
+            <a href="profil.html" class="lien_droit">></a>
 
-    <div class="container">
-    <h2>Mes tournois</h2>
-    <br>
+            <div class="pages">
+                <h2>Mes tournois</h2>
+                <hr>
+                <table>
+                    <tr id="entete">
+                        <td>Nom</td>
+                        <td>Date</td>
+                        {#<td>Score</td>#}
+                    </tr>
 
-    <ul>
-        {% for tournois in user.tournois if tournois.tournoisDateFin == null %}
-            <li> <a href="{{ path('afficher_tournois', {'id':tournois.id}) }}">{{ tournois.tournoisNom }}</a> </li>
-        {% endfor %}
-    </ul>
+                    {% for tournois in user.tournois if tournois.tournoisDateFin == null %}
+                        <tr>
+                            <td><a href="{{ path('afficher_tournois', {'id':tournois.id}) }}">{{ tournois.tournoisNom }}</a></td>
+                            <td>{{ tournois.tournoisDateDebut|date }}</td>
+                            {#<td>25</td>#}
+                        </tr>
+                    {% endfor %}
+                </table>
+                <a href="{{ path('tournois_homepage') }}"> <button>Retour</button></a>
 
+            </div>
 
+        </div>
+        {% include 'AppBundle::Default/image_plateau.html.twig'%}
+    </div>
 
-
-    <a href="{{ path('tournois_homepage') }}"> <button>Retour</button></a>
 {% endblock %}

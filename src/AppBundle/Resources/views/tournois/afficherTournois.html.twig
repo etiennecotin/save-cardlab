@@ -1,88 +1,105 @@
-{% extends 'AppBundle::base.html.twig' %}
+{% extends 'AppBundle::base_jeu.html.twig' %}
 
 {% block body %}
-    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+    {% include 'AppBundle::Default/header.html.twig' with {'user': user.userPrenom } %}
+    <div class="jeu">
 
+        <div class="tapis">
 
-    <div class="container">
-    <h2>Tournois {{ tournois.tournoisNom }}</h2>
-    <br>
+            <div class="pages">
+                <h2>Tournoi {{ tournois.tournoisNom }}</h2>
+                <hr>
+                {% if isComplet == true %}
+                    <h3>Participants ({{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }})</h3>
+                {% else %}
+                    <h3>Participants ({{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }})</h3>
+                {% endif %}
+                <ul>
+                {% for joueur in tournois.getUsers %}
+                    <li>{{ joueur.username }}</li>
 
+                {% else %}
+                    <p>Aucun participant sur ce tournois</p>
+                {% endfor %}
+                </ul>
 
-    {% if isComplet == true %}
-        <h3>{{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }} Le tournoi est complet</h3>
-    {% else %}
-        <h3>{{ nbParticipants }}/{{ tournois.tournoisNombreJoueurs }}</h3>
-    {% endif %}
-    {% if participe == true %}
-        <p>Je participe au tournoi</p>
-    {% endif %}
-    {% if isComplet == false and participe == false and isComplet == false %}
-        <form action="" method="post">
-            <input type="submit" name="participer" value="Participer au tournoi">
-        </form>
-    {% elseif participe == true and isComplet == false %}
-        <form action="" method="post">
-            <input type="submit" name="quitter" value="Quitter le tournoi">
-        </form>
-
-    {% endif %}
-
-    {% if isComplet == true %}
-
-        {% if partieFinie == true %}
-            <h4>le tournoi est fini</h4>
-
-            <h5>le gagnant est {{ victoire.username }}</h5>
-            {% if participe == true %}
-                <p><a href="{{ path('historique_tournoi', {'id':tournois.id} ) }}">Voir le tournois dans l'historique</a></p>
-            {% endif %}
-
-        {% else %}
-            <h4>le tournoi a commencé</h4>
-        {% endif %}
-
-
-        {#{{ dump(match) }}#}
-        {#{{ dump(parties) }}#}
-        {#{{ dump(bloc) }}#}
-
-        {% for key, partie in bloc %}
-            <h3>Manche {{ loop.index }}</h3>
-            {% for key, partie in partie  %}
-                {% if key == 0 %}
-                    {% else %}
-                        {% if partie.joueur1 == null or partie.joueur2 == null %}
-                            <h4>La partie n'a pas encore de joueurs</h4>
-                            {% else %}
-                                <h4>Partie {{ loop.index-1 }} entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</h4>
-                                <p><a href="{{ path('afficher_tounois_partie', {'idTourois':tournois.id,'id':partie.id} ) }}">voir le match</a></p>
-                        {% endif %}
+                {% if participe == true %}
+                    <p>Je participe au tournoi</p>
+                {% endif %}
+                {% if isComplet == false and participe == false and isComplet == false %}
+                    <form action="" method="post">
+                        <button type="submit" name="participer" value="">Participer au tournoi</button>
+                    </form>
+                {% elseif participe == true and isComplet == false %}
+                    <form action="" method="post">
+                        <button type="submit" name="quitter" value="">Quitter le tournoi</button>
+                    </form>
 
                 {% endif %}
 
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
+                {% if isComplet == true %}
 
-    <br>
-    <h4>Liste des participants</h4>
-    {% for joueur in tournois.getUsers %}
-        <p>{{ joueur.username }}</p>
+                    {% if partieFinie == true %}
+                        <h4>le tournoi est fini</h4>
 
-    {% else %}
-        <p>Aucun participant sur ce tournois</p>
-    {% endfor %}
+                        <h5>le gagnant est {{ victoire.username }}</h5>
+                        {% if participe == true %}
+                            <p><a href="{{ path('historique_tournoi', {'id':tournois.id} ) }}">Voir le tournois dans l'historique</a></p>
+                        {% endif %}
+
+                    {% else %}
+                        <h3>Le tournoi a commencé.</h3>
+
+                    {% endif %}
+
+                    {% for key, partie in bloc %}
+                        <h3>Manche {{ loop.index }}</h3>
+                        {% for key, partie in partie  %}
+                            {% if key == 0 %}
+                            {% else %}
+                                {% if partie.joueur1 == null or partie.joueur2 == null %}
+                                    <h4>La partie n'a pas encore de joueurs</h4>
+                                {% else %}
+                                    {#<h4>Partie {{ loop.index-1 }} entre {{ partie.joueur1.username }} et {{ partie.joueur2.username }}</h4>#}
+                                    {#<p><a href="{{ path('afficher_tounois_partie', {'idTourois':tournois.id,'id':partie.id} ) }}">voir le match</a></p>#}
+                                    <table>
+                                        <tr>
+                                            <td>Partie {{ loop.index-1 }}</td>
+                                            <td>{{ partie.joueur1.username }}</td>
+                                            <td>{{ partie.joueur2.username }}</td>
+                                            <td><a href="{{ path('afficher_tounois_partie', {'idTourois':tournois.id,'id':partie.id} ) }}">voir le match</a></td>
+                                        </tr>
+                                    </table>
+                                {% endif %}
+
+                            {% endif %}
+
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                <br>
 
 
-    {% if app.session.flashBag.has('success') %}
-        <div class="alert alert-success">
-            {% for msg in app.session.flashBag.get('success') %}
-                {{ msg }}
-            {% endfor %}
+
+                {% if app.session.flashBag.has('success') %}
+                    <div class="alert alert-success">
+                        {% for msg in app.session.flashBag.get('success') %}
+                            {{ msg }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <a href="{{ path('afficher_liste_tournois') }}"> <button>Retour</button></a>
+
+            </div>
+
+
         </div>
-    {% endif %}
+        {% include 'AppBundle::Default/image_plateau.html.twig'%}
+    </div>
 
 
-    <a href="{{ path('afficher_liste_tournois') }}"> <button>Retour</button></a>
+
+
 {% endblock %}

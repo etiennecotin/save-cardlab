@@ -275,6 +275,9 @@ class JoueursController extends Controller
             $em->persist($partie);
             $em->flush();
 
+
+            $find2 = $this->getDoctrine()->getRepository('AppBundle:Partie')->findOneBy(array('joueur1' => $user, 'joueur2' => $joueur));
+
             //envoi invitation par mail
             $message = \Swift_Message::newInstance()
                 ->setSubject('Invitation à joueur')
@@ -284,7 +287,7 @@ class JoueursController extends Controller
                     $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
                         'AppBundle::emails/invitation.html.twig',
-                        array('name' => $user->getUsername())
+                        array('name' => $user->getUsername(), 'partie' => $find2)
                     ),
                     'text/html'
                 )
@@ -562,6 +565,8 @@ class JoueursController extends Controller
             $monScore = $scoreJ1;
             $adversaireScore = $scoreJ2;
 
+            $adversaire = $partie->getJoueur2();
+
             if ($cartePosee == 0){
                 $activePose = true;
             }elseif ($cartePosee == 1){
@@ -735,8 +740,10 @@ class JoueursController extends Controller
 
             $me = $partie->getJoueur2();
 
-            $monScore = $scoreJ1;
-            $adversaireScore = $scoreJ2;
+            $monScore = $scoreJ2;
+            $adversaireScore = $scoreJ1;
+
+            $adversaire = $partie->getJoueur1();
 
             if ($cartePosee == 0){
                 $activePose = true;
@@ -774,12 +781,13 @@ class JoueursController extends Controller
 
         $chat = $this->getDoctrine()->getRepository('AppBundle:Chat')->findBy(array('partie' => $partie->getId()));
 
-        $variablePartie = array('idPartie'=> $idPartie, 'imJoueur' => $imJoueur, 'pioche'=>$pioche, 'mesCartes'=>$mesCartes, 'monTerrain'=>$monTerrain, 'adversaireCartes'=> $adversaireCartes, 'adversaireTerrain' => $adversaireTerrain, 'montour' => $montour, 'partieDefausse' => $partieDefausse , 'activePose' => $activePose, 'carteRestante' => $carteRestante, 'partieFin' => $partieFin, 'scoreJ1' => $scoreJ1, 'scoreJ2' => $scoreJ2, 'tournois' => $partieTournois, 'monScore' => $monScore, 'adversaireScore' => $adversaireScore, 'me'=> $me, 'chat'=>$chat );
+        $variablePartie = array('idPartie'=> $idPartie, 'imJoueur' => $imJoueur, 'pioche'=>$pioche, 'mesCartes'=>$mesCartes, 'monTerrain'=>$monTerrain, 'adversaireCartes'=> $adversaireCartes, 'adversaireTerrain' => $adversaireTerrain, 'montour' => $montour, 'partieDefausse' => $partieDefausse , 'activePose' => $activePose, 'carteRestante' => $carteRestante, 'partieFin' => $partieFin, 'scoreJ1' => $scoreJ1, 'scoreJ2' => $scoreJ2, 'tournois' => $partieTournois, 'monScore' => $monScore, 'adversaireScore' => $adversaireScore, 'me'=> $me, 'chat'=>$chat, 'adversaire' => $adversaire );
 
 //      traiter les requetes
         if ($request->isMethod('POST'))
         {
 
+//            die();
             $piocher = $request->request->get('piocher');
 
             $poser = $request->request->get('poser');
@@ -792,7 +800,7 @@ class JoueursController extends Controller
 //      faire piocher ke joueur
             if($piocher) {
 
-
+//                die();
                 $partiePioche = $partie->getPartiePioche();
 
                 $cartePiocher = array_pop($partiePioche);

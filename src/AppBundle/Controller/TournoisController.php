@@ -186,6 +186,8 @@ class TournoisController extends Controller
             }
         }
 
+        $victoire=null;
+        $partieFinie = null;
         $parties=null;
         $bloc =null;
         $match = array();

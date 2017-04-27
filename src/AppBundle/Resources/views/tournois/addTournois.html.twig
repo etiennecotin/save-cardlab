@@ -1,33 +1,38 @@
-{% extends 'AppBundle::base.html.twig' %}
+{% extends 'AppBundle::base_jeu.html.twig' %}
 
 {% block body %}
-    <h1>Espace joueur: {{ user.userPrenom }}</h1>
+    {% include 'AppBundle::Default/header.html.twig' with {'user': user.userPrenom } %}
+    <div class="jeu">
 
+        <div class="tapis">
+            <a href="classement.html" class="lien_gauche"><</a>
+            <a href="profil.html" class="lien_droit">></a>
 
-    <div class="container">
-    <h2>Créer un tournoi</h2>
-    <br>
+            <div class="pages">
+                <h2>Créer un tournoi</h2>
+                <hr>
+                <form action="{{ path('creer_tournois') }}" method="post">
 
-    <form action="{{ path('creer_tournois') }}" method="post">
+                    {#{{ form_start(form) }}#}
+                    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                    {{ form_widget(form) }}
+                    {{ form_rest(form) }}
+                    <button type="submit">Créer</button>
+                    {#{{ form_end(form) }}#}
+                </form>
+                <a href="{{ path('tournois_homepage') }}"><button>Annuler</button></a>
 
-        {#{{ form_start(form) }}#}
-        {% form_theme form 'bootstrap_3_layout.html.twig' %}
-        {{ form_widget(form) }}
-        {{ form_rest(form) }}
-        <input type="submit" value="Créer">
-        {#{{ form_end(form) }}#}
-    </form>
+                {% if app.session.flashBag.has('success') %}
+                    <div class="alert alert-success">
+                        {% for msg in app.session.flashBag.get('success') %}
+                            {{ msg|raw }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
 
-    {% if app.session.flashBag.has('success') %}
-        <div class="alert alert-success">
-            {% for msg in app.session.flashBag.get('success') %}
-                {{ msg|raw }}
-            {% endfor %}
+            </div>
+
         </div>
-    {% endif %}
-
-    <br>
-
-
-    <a href="{{ path('tournois_homepage') }}"> <button>Retour</button></a>
+        {% include 'AppBundle::Default/image_plateau.html.twig'%}
+    </div>
 {% endblock %}
