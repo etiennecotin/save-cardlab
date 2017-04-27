@@ -1167,7 +1167,7 @@ class JoueursController extends Controller
             }
         }
 
-        return $this->render('AppBundle:joueurs:partie.html.twig', ['cartes3'=>$cartes2, 'partie' => $partie, 'user'=> $user, 'variablePartie'=> $variablePartie]);
+        return $this->render('AppBundle:joueurs:partie_sauvegarde.html.twig', ['cartes3'=>$cartes2, 'partie' => $partie, 'user'=> $user, 'variablePartie'=> $variablePartie]);
     }
 
 }
